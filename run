@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+restart() {
+  docker compose down
+  docker compose up --build -d
+}
+
+logs() {
+  docker compose logs -f
+}
+
+cmd="${1:-}"
+case "$cmd" in
+  restart) restart ;;
+  logs)    logs ;;
+  *)       echo "Usage: ./run {restart|logs}" >&2; exit 1 ;;
+esac
