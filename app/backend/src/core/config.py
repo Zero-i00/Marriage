@@ -6,7 +6,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 BaseConfig = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
 
 
-class DatabaseConfig(BaseSettings):
+class DatabaseSettings(BaseSettings):
     model_config = BaseConfig
 
     postgres_host: str
@@ -28,7 +28,7 @@ class DatabaseConfig(BaseSettings):
         )
 
 
-class Config(BaseSettings):
+class Settings(BaseSettings):
     model_config = BaseConfig
 
     app_debug: bool
@@ -38,9 +38,9 @@ class Config(BaseSettings):
 
     app_cors_origin: list[str] = Field(default_factory=list)
 
-    db: DatabaseConfig = Field(default_factory=DatabaseConfig)
+    db: DatabaseSettings = Field(default_factory=DatabaseSettings)
 
 
 @lru_cache
-def get_config() -> Config:
-    return Config()
+def get_settings() -> Settings:
+    return Settings()
