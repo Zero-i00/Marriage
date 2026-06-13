@@ -28,6 +28,12 @@ class DatabaseSettings(BaseSettings):
         )
 
 
+class TelegramBotSettings(BaseSettings):
+    model_config = BaseConfig
+
+    tg_bot_super_user_id: str
+
+
 class Settings(BaseSettings):
     model_config = BaseConfig
 
@@ -40,6 +46,7 @@ class Settings(BaseSettings):
     app_cors_origin: list[str] = Field(default_factory=list)
 
     db: DatabaseSettings = Field(default_factory=DatabaseSettings)
+    tg: TelegramBotSettings = Field(default_factory=TelegramBotSettings)
 
 
 @lru_cache
