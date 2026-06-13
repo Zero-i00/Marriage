@@ -6,6 +6,7 @@ from core.exceptions import DomainException
 from middleware import RequestMiddleware
 from modules.drink.resolver import get_drink_router
 from modules.guest.resolver import get_guest_router
+from modules.invitation.resolver import get_invitation_router
 
 settings = get_settings()
 
@@ -25,6 +26,7 @@ async def domain_exception_handler(_: Request, exc: DomainException) -> JSONResp
 
 app.include_router(get_drink_router())
 app.include_router(get_guest_router())
+app.include_router(get_invitation_router())
 
 
 if __name__ == "__main__":
