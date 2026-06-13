@@ -35,5 +35,5 @@ class DrinkResolver:
         return await service.destroy(drink_id)
 
 
-def get_drink_router() -> APIRouter:
-    return DrinkResolver().router
+def get_drink_resolver() -> DrinkResolver:
+    return DrinkResolver()

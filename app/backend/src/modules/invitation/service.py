@@ -22,12 +22,19 @@ class InvitationService:
         if not data.guests:
             raise BadRequestException("Invitation must have at least one guest")
 
+        drink_ids = [drink.id for drink in data.drinks]
+        if drink_ids:
+            existing = await self.repository.filter_existing_drink_ids(drink_ids=drink_ids)
+            missing = sorted(set(drink_ids) - existing)
+            if missing:
+                raise BadRequestException(f"Drinks not found: {missing}")
+
         instance = await self.repository.create(
             is_plan_visit=data.is_plan_visit,
             music=data.music,
             comment=data.comment,
             guests=[guest.full_name for guest in data.guests],
-            drink_ids=[drink.id for drink in data.drinks],
+            drink_ids=drink_ids,
         )
 
         return SchemaInvitationOut.model_validate(instance)

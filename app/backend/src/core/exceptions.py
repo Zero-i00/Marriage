@@ -23,3 +23,8 @@ class ForbiddenException(DomainException):
 class NotFoundException(DomainException):
     status_code = status.HTTP_404_NOT_FOUND
     default_message = "Not found"
+
+
+class ConflictException(DomainException):
+    status_code = status.HTTP_409_CONFLICT
+    default_message = "Conflict"

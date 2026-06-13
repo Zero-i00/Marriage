@@ -7,7 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
 from core.strategies.repository import BaseRepository
-from database.models import GuestModel, InvitationModel, invitations_to_drinks
+from database.models import DrinkModel, GuestModel, InvitationModel, invitations_to_drinks
 
 
 class InvitationRepository(BaseRepository[InvitationModel]):
@@ -24,6 +24,15 @@ class InvitationRepository(BaseRepository[InvitationModel]):
 
     async def get_by_id(self, *, invitation_id: int) -> InvitationModel | None:
         return await self.session.get(self.table, invitation_id)
+
+    async def filter_existing_drink_ids(self, *, drink_ids: Sequence[int]) -> set[int]:
+        if not drink_ids:
+            return set()
+
+        query = select(DrinkModel.id).where(DrinkModel.id.in_(drink_ids))
+        stmt = await self.session.execute(query)
+
+        return set(stmt.scalars().all())
 
     async def create(
         self,

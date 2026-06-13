@@ -37,5 +37,5 @@ class InvitationResolver:
         return await service.destroy(invitation_id)
 
 
-def get_invitation_router() -> APIRouter:
-    return InvitationResolver().router
+def get_invitation_resolver() -> InvitationResolver:
+    return InvitationResolver()

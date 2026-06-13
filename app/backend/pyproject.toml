@@ -23,6 +23,8 @@ dev = [
 [tool.black]
 line-length = 100
 target-version = ["py312"]
+# Alembic revisions are auto-generated; keep black in sync with ruff's exclude.
+extend-exclude = "src/database/migrations/versions"
 
 [tool.ruff]
 line-length = 100

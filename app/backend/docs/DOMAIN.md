@@ -259,8 +259,8 @@ class DrinkResolver:
         return await service.destroy(drink_id)
 
 
-def get_drink_router() -> APIRouter:
-    return DrinkResolver().router
+def get_drink_resolver() -> DrinkResolver:
+    return DrinkResolver()
 ```
 
 Конвенции:
@@ -273,7 +273,8 @@ def get_drink_router() -> APIRouter:
 - Аннотации возвращаемого типа — схемы (`SchemaDrinkOut`), чтобы FastAPI строил
   корректную OpenAPI-документацию и сериализацию.
 - В резолвере **нет** бизнес-логики и работы с БД — только маршрутизация.
-- Фабрика `get_<entity>_router()` отдаёт готовый роутер для подключения в `main.py`.
+- Фабрика `get_<entity>_resolver()` отдаёт экземпляр резолвера; в `main.py`
+  подключается его `.router`.
 
 ---
 
@@ -474,13 +475,13 @@ curl -i -X POST localhost:8000/drink \
 через его фабрику:
 
 ```python
-from modules.drink.resolver import get_drink_router
+from modules.drink.resolver import get_drink_resolver
 
-app.include_router(get_drink_router())
+app.include_router(get_drink_resolver().router)
 ```
 
 Чтобы добавить новый домен в приложение, достаточно импортировать его
-`get_<entity>_router` и вызвать `app.include_router(...)`.
+`get_<entity>_resolver` и вызвать `app.include_router(get_<entity>_resolver().router)`.
 
 ---
 
@@ -495,8 +496,8 @@ app.include_router(get_drink_router())
    репозиторий), методы возвращают схемы и бросают доменные исключения; фабрика
    `get_<entity>_service(session = Depends(get_session))`.
 5. **`resolver.py`** — `class <Entity>Resolver` с `router = APIRouter(prefix, tags)`,
-   эндпоинты-`@staticmethod` под `@router.<verb>`; фабрика `get_<entity>_router()`.
-6. Подключить роутер в `main.py`: `app.include_router(get_<entity>_router())`.
+   эндпоинты-`@staticmethod` под `@router.<verb>`; фабрика `get_<entity>_resolver()`.
+6. Подключить роутер в `main.py`: `app.include_router(get_<entity>_resolver().router)`.
 
 Соглашения об именах:
 
@@ -505,4 +506,4 @@ app.include_router(get_drink_router())
 | Schema | `Schema<Entity>In` / `Schema<Entity>Out` | — |
 | Repository | `<Entity>Repository` | `get_<entity>_repository` |
 | Service | `<Entity>Service` | `get_<entity>_service` |
-| Resolver | `<Entity>Resolver` | `get_<entity>_router` |
+| Resolver | `<Entity>Resolver` | `get_<entity>_resolver` |

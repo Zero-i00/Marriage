@@ -18,5 +18,5 @@ class GuestResolver:
         return await service.list()
 
 
-def get_guest_router() -> APIRouter:
-    return GuestResolver().router
+def get_guest_resolver() -> GuestResolver:
+    return GuestResolver()
