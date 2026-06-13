@@ -6,10 +6,10 @@ from sqlalchemy import pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import create_async_engine
 
+import database.models  # noqa: F401
 from core.config import get_settings
 from database.declarative import Base
 
-import database.models  # noqa: F401
 config = context.config
 
 if config.config_file_name is not None:

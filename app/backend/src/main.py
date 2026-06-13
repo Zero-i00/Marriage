@@ -10,11 +10,7 @@ from modules.guest.resolver import get_guest_router
 settings = get_settings()
 
 
-
-app = FastAPI(
-    title=settings.app_title,
-    version=settings.app_version,
-)
+app = FastAPI(title=settings.app_title, version=settings.app_version, root_path="/api")
 
 app.add_middleware(RequestMiddleware)
 

@@ -13,7 +13,6 @@ def get_request_id() -> str | None:
 
 
 class RequestMiddleware:
-
     def __init__(self, app: ASGIApp, header: str = REQUEST_ID_HEADER) -> None:
         self.app = app
         self.header = header

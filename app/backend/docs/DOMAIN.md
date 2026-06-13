@@ -15,6 +15,7 @@
 - [Слой Resolver](#слой-resolver)
 - [Поток зависимостей (DI)](#поток-зависимостей-di)
 - [Обработка ошибок](#обработка-ошибок)
+- [Защита эндпоинтов (guards)](#защита-эндпоинтов-guards)
 - [Подключение модуля в приложение](#подключение-модуля-в-приложение)
 - [Чек-лист создания нового домена](#чек-лист-создания-нового-домена)
 
@@ -318,6 +319,11 @@ class BadRequestException(DomainException):
     default_message = "Bad request"
 
 
+class ForbiddenException(DomainException):
+    status_code = status.HTTP_403_FORBIDDEN
+    default_message = "Forbidden"
+
+
 class NotFoundException(DomainException):
     status_code = status.HTTP_404_NOT_FOUND
     default_message = "Not found"
@@ -341,6 +347,124 @@ async def domain_exception_handler(_: Request, exc: DomainException) -> JSONResp
 
 - Новый тип ошибки — это новый подкласс `DomainException` со своими `status_code`
   и `default_message`; отдельный хендлер писать не нужно.
+
+---
+
+## Защита эндпоинтов (guards)
+
+**Guard** — это FastAPI-зависимость, которая выполняется **до тела эндпоинта** и
+бросает доменное исключение, если доступ запрещён. Сам эндпоинт остаётся тонким и
+ничего не знает про проверку — он просто перестаёт выполняться, если guard упал.
+
+Guard'ы лежат в `core/guards/` и переиспользуются между модулями. Пример —
+`is_super_user_guard` (`core/guards/permissions.py`): пускает дальше только если в
+заголовке `X-BOT-USER-ID` пришёл id, совпадающий с `tg_bot_super_user_id` из конфига.
+
+```python
+from fastapi import Header
+
+from core.config import get_settings
+from core.exceptions import ForbiddenException
+
+BOT_USER_ID_HEADER = "X-BOT-USER-ID"
+
+
+async def is_super_user_guard(
+    x_bot_user_id: str | None = Header(default=None, alias=BOT_USER_ID_HEADER),
+) -> str:
+    settings = get_settings()
+    if x_bot_user_id != settings.tg.tg_bot_super_user_id:
+        raise ForbiddenException("Only the super user can perform this action")
+    return x_bot_user_id
+```
+
+Конвенции:
+
+- Заголовок объявляем как **необязательный** (`Header(default=None, ...)`): тогда его
+  отсутствие даёт чистый `403 Forbidden` от нашего хендлера, а не `422` от FastAPI.
+  Отсутствующий, пустой и неверный заголовок проваливаются одинаково.
+- Guard ничего не возвращает в HTTP-слой полезного — упал, значит `DomainException`
+  превратится в JSON-ответ глобальным хендлером (см. [Обработка ошибок](#обработка-ошибок)).
+- Именование — `<правило>_guard`.
+
+Подключается guard двумя способами.
+
+**1. На отдельный эндпоинт** — когда защищена только часть ручек модуля.
+Результат не нужен в теле, поэтому связываем его с `_`. Так сделано в `drink`:
+`list` открыт, а `create` и `destroy` — под guard'ом.
+
+```python
+from fastapi import APIRouter, Depends, status
+
+from core.guards.permissions import is_super_user_guard
+from modules.drink.schema import SchemaDrinkOut, SchemaDrinkIn
+from modules.drink.service import DrinkService, get_drink_service
+
+
+class DrinkResolver:
+
+    router = APIRouter(prefix="/drink", tags=["Drink"])
+
+    @staticmethod
+    @router.get("")  # открыт для всех
+    async def list(
+        service: DrinkService = Depends(get_drink_service),
+    ) -> list[SchemaDrinkOut]:
+        return await service.list()
+
+    @staticmethod
+    @router.post("", status_code=status.HTTP_201_CREATED)
+    async def create(
+        data: SchemaDrinkIn,
+        service: DrinkService = Depends(get_drink_service),
+        _: str = Depends(is_super_user_guard),  # только супер-пользователь
+    ) -> SchemaDrinkOut:
+        return await service.create(data)
+```
+
+**2. На весь роутер** — когда защищены **все** ручки модуля. Указываем guard один
+раз в `dependencies` у `APIRouter`, и он применится ко всем эндпоинтам. Так
+сделано в `guest`:
+
+```python
+from fastapi import APIRouter, Depends
+
+from core.guards.permissions import is_super_user_guard
+from modules.guest.schema import SchemaGuestOut
+from modules.guest.service import GuestService, get_guest_service
+
+
+class GuestResolver:
+
+    router = APIRouter(
+        prefix="/guest",
+        tags=["Guest"],
+        dependencies=[Depends(is_super_user_guard)],  # guard на все ручки роутера
+    )
+
+    @staticmethod
+    @router.get("")
+    async def list(
+        service: GuestService = Depends(get_guest_service),
+    ) -> list[SchemaGuestOut]:
+        return await service.list()
+```
+
+Правило выбора: **весь роутер** — если guard нужен на все ручки сразу; **на
+эндпоинт** — если часть маршрутов остаётся открытой.
+
+Пример запроса к защищённой ручке:
+
+```bash
+# без заголовка или с неверным id → 403 {"message": "Only the super user ..."}
+curl -i -X POST localhost:8000/drink \
+  -H 'Content-Type: application/json' -d '{"title":"Beer"}'
+
+# с верным id из TG_BOT_SUPER_USER_ID → 201
+curl -i -X POST localhost:8000/drink \
+  -H 'X-BOT-USER-ID: 1529841680' \
+  -H 'Content-Type: application/json' -d '{"title":"Beer"}'
+```
 
 ---
 

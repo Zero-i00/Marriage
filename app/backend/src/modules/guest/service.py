@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Sequence
+from collections.abc import Sequence
 
 from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -23,7 +23,7 @@ class GuestService:
     async def get(self, guest_id: int) -> SchemaGuestOut:
         instance = await self.repository.get_by_id(guest_id=guest_id)
         if instance is None:
-            raise NotFoundException(f'Guest with id {guest_id} not found')
+            raise NotFoundException(f"Guest with id {guest_id} not found")
 
         return SchemaGuestOut.model_validate(instance)
 
@@ -48,7 +48,7 @@ class GuestService:
     async def destroy(self, guest_id: int) -> None:
         instance = await self.repository.get_by_id(guest_id=guest_id)
         if instance is None:
-            raise NotFoundException(f'Guest with id {guest_id} not found')
+            raise NotFoundException(f"Guest with id {guest_id} not found")
 
         await self.repository.destroy(instance)
 

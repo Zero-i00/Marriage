@@ -4,7 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from core.exceptions import NotFoundException
 from database.session import get_session
 from modules.drink.repository import get_drink_repository
-from modules.drink.schema import SchemaDrinkOut, SchemaDrinkIn
+from modules.drink.schema import SchemaDrinkIn, SchemaDrinkOut
 
 
 class DrinkService:
@@ -17,16 +17,14 @@ class DrinkService:
         return [SchemaDrinkOut.model_validate(item) for item in items]
 
     async def create(self, data: SchemaDrinkIn) -> SchemaDrinkOut:
-        instance = await self.repository.create(
-            title=data.title
-        )
+        instance = await self.repository.create(title=data.title)
 
         return SchemaDrinkOut.model_validate(instance)
 
     async def destroy(self, drink_id: int) -> None:
         instance = await self.repository.get_by_id(drink_id=drink_id)
         if instance is None:
-            raise NotFoundException(f'Drink with id {drink_id} not found')
+            raise NotFoundException(f"Drink with id {drink_id} not found")
 
         await self.repository.destroy(instance)
 

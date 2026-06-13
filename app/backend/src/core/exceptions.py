@@ -15,6 +15,11 @@ class BadRequestException(DomainException):
     default_message = "Bad request"
 
 
+class ForbiddenException(DomainException):
+    status_code = status.HTTP_403_FORBIDDEN
+    default_message = "Forbidden"
+
+
 class NotFoundException(DomainException):
     status_code = status.HTTP_404_NOT_FOUND
     default_message = "Not found"

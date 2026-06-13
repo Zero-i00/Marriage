@@ -1,7 +1,3 @@
-
-
-__all__ = [
-    'RequestMiddleware'
-]
+__all__ = ["RequestMiddleware"]
 
 from .request import RequestMiddleware

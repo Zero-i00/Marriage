@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Sequence
+from collections.abc import Sequence
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -44,7 +44,6 @@ class GuestRepository(BaseRepository[GuestModel]):
             await self.session.refresh(instance)
 
         return instances
-
 
     async def destroy(self, instance: GuestModel) -> None:
         await self.session.delete(instance)

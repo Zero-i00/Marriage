@@ -28,9 +28,16 @@ target-version = ["py312"]
 line-length = 100
 target-version = "py312"
 src = ["src"]
+# Alembic revisions are auto-generated; don't lint or format them.
+extend-exclude = ["src/database/migrations/versions"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP", "SIM"]
+
+[tool.ruff.lint.flake8-bugbear]
+# FastAPI dependency-injection markers are meant to be called in argument
+# defaults; whitelist them so B008 doesn't flag the idiomatic pattern.
+extend-immutable-calls = ["fastapi.Depends", "fastapi.Query", "fastapi.Path", "fastapi.Header"]
 
 [tool.ruff.format]
 quote-style = "double"
