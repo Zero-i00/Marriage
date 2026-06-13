@@ -33,8 +33,9 @@ class Settings(BaseSettings):
 
     app_debug: bool
     app_host: str
-    app_post: int
+    app_port: int
     app_version: str
+    app_title: str = 'Marriage API'
 
     app_cors_origin: list[str] = Field(default_factory=list)
 
