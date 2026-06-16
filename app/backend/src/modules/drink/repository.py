@@ -8,16 +8,16 @@ from database.models import DrinkModel
 
 
 class DrinkRepository(BaseRepository[DrinkModel]):
-    table = DrinkModel
+    model = DrinkModel
 
     async def list(self) -> Sequence[DrinkModel]:
-        query = select(self.table)
+        query = select(self.model)
         stmt = await self.session.execute(query)
 
         return stmt.scalars().all()
 
     async def get_by_id(self, *, drink_id: int) -> DrinkModel | None:
-        return await self.session.get(self.table, drink_id)
+        return await self.session.get(self.model, drink_id)
 
     async def create(self, *, title: str) -> DrinkModel:
         instance = DrinkModel(title=title)

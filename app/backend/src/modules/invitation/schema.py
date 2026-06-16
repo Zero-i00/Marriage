@@ -6,18 +6,14 @@ from modules.drink.schema import SchemaDrinkOut
 from modules.guest.schema import SchemaGuestIn, SchemaGuestOut
 
 
-class SchemaInvitationDrinkIn(BaseModel):
-    id: int
-
-
 class SchemaInvitationIn(BaseModel):
     is_plan_visit: bool
 
     music: str | None = None
     comment: str | None = None
 
+    drink_ids: list[int] = Field(default_factory=list)
     guests: list[SchemaGuestIn] = Field(default_factory=list)
-    drinks: list[SchemaInvitationDrinkIn] = Field(default_factory=list)
 
 
 class SchemaInvitationOut(BaseModel):

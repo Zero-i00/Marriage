@@ -118,7 +118,7 @@ from database.models import DrinkModel
 
 
 class DrinkRepository(BaseRepository[DrinkModel]):
-    table = DrinkModel
+    model = DrinkModel
 
     async def list(self) -> Sequence[DrinkModel]:
         query = select(self.table)

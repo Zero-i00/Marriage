@@ -4,6 +4,7 @@ from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from core.exceptions import BadRequestException, NotFoundException
+from database.models import GuestModel
 from database.session import get_session
 from modules.invitation.repository import get_invitation_repository
 from modules.invitation.schema import SchemaInvitationIn, SchemaInvitationOut
@@ -20,21 +21,18 @@ class InvitationService:
 
     async def create(self, data: SchemaInvitationIn) -> SchemaInvitationOut:
         if not data.guests:
-            raise BadRequestException("Invitation must have at least one guest")
+            raise BadRequestException("В анкете должен быть указан хотя бы один гость!")
 
-        drink_ids = [drink.id for drink in data.drinks]
-        if drink_ids:
-            existing = await self.repository.filter_existing_drink_ids(drink_ids=drink_ids)
-            missing = sorted(set(drink_ids) - existing)
-            if missing:
-                raise BadRequestException(f"Drinks not found: {missing}")
+        guest_list = [GuestModel(full_name=item.full_name) for item in data.guests]
+
+        drink_list = await self.repository.get_drink_list(drink_ids=data.drink_ids)
 
         instance = await self.repository.create(
             is_plan_visit=data.is_plan_visit,
             music=data.music,
             comment=data.comment,
-            guests=[guest.full_name for guest in data.guests],
-            drink_ids=drink_ids,
+            guests=guest_list,
+            drinks=drink_list,
         )
 
         return SchemaInvitationOut.model_validate(instance)

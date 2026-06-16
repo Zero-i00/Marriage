@@ -8,10 +8,10 @@ from database.models import GuestModel
 
 
 class GuestRepository(BaseRepository[GuestModel]):
-    table = GuestModel
+    model = GuestModel
 
     async def list(self) -> Sequence[GuestModel]:
-        query = select(self.table)
+        query = select(self.model)
         stmt = await self.session.execute(query)
 
         return stmt.scalars().all()

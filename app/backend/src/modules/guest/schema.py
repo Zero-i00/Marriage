@@ -1,8 +1,10 @@
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict
+
+from core.annotation import CHAR_FIELD
 
 
 class SchemaGuestIn(BaseModel):
-    full_name: str = Field(min_length=1)
+    full_name: CHAR_FIELD
 
 
 class SchemaGuestOut(BaseModel):

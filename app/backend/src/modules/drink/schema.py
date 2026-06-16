@@ -1,8 +1,10 @@
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict
+
+from core.annotation import CHAR_FIELD
 
 
 class SchemaDrinkIn(BaseModel):
-    title: str = Field(min_length=1)
+    title: CHAR_FIELD
 
 
 class SchemaDrinkOut(BaseModel):
