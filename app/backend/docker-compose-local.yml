@@ -1,0 +1,45 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: docker/local/Dockerfile
+    container_name: marriage-backend-local
+    env_file:
+      - .env
+    ports:
+      # main.py биндит uvicorn на APP_PORT внутри контейнера — публикуем тот же порт.
+      - "${APP_PORT:-8000}:${APP_PORT:-8000}"
+    volumes:
+      - .:/app
+    networks:
+      - app-network
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  db:
+    image: postgres:16-alpine
+    container_name: marriage-db-local
+    env_file:
+      - .env
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - marriage-pg-data:/var/lib/postgresql/data
+    networks:
+      - app-network
+    healthcheck:
+      # $$ — литеральный $, переменные разворачиваются shell'ом внутри контейнера.
+      test: ["CMD-SHELL", "pg_isready -U \"$$POSTGRES_USER\" -d \"$$POSTGRES_DB\""]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+
+volumes:
+  marriage-pg-data:
+
+networks:
+  app-network:
+    driver: bridge

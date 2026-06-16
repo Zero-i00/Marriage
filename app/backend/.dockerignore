@@ -1,0 +1,29 @@
+# Virtual envs (venv ставится в образе в /opt/venv)
+.venv/
+venv/
+
+# Python артефакты
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ruff_cache/
+.pytest_cache/
+.mypy_cache/
+
+# Окружение и секреты (приходят через env_file в рантайме)
+.env
+.env.*
+!.env.example
+
+# Docker / VCS / IDE
+# Внимание: docker/ НЕ игнорируем — entrypoint.sh копируется в образ.
+.git/
+.gitignore
+.dockerignore
+docker-compose*.yml
+.idea/
+.vscode/
+
+# Прочее
+*.log
+README.md
