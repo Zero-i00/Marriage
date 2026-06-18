@@ -1,0 +1,32 @@
+# Virtual envs (venv ставится в образе в /opt/venv)
+.venv/
+venv/
+
+# Python артефакты
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ruff_cache/
+.pytest_cache/
+.mypy_cache/
+
+# Окружение и секреты (приходят через env_file в рантайме)
+.env
+.env.*
+!.env.example
+
+# Конфиг прокси-сайдкара — монтируется в контейнер proxy, в образ бота не нужен
+sing-box*.json
+
+# Docker / VCS / IDE
+docker/
+.git/
+.gitignore
+.dockerignore
+docker-compose*.yml
+.idea/
+.vscode/
+
+# Прочее
+*.log
+README.md

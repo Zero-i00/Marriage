@@ -1,0 +1,30 @@
+services:
+  bot:
+    build:
+      context: .
+      dockerfile: docker/local/Dockerfile
+    container_name: marriage-bot-local
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+    networks:
+      - app-network
+    depends_on:
+      - backend
+      - proxy
+    restart: unless-stopped
+
+  proxy:
+    image: ghcr.io/sagernet/sing-box:latest
+    container_name: marriage-proxy-local
+    command: ["run", "-c", "/etc/sing-box/config.json"]
+    volumes:
+      - ./sing-box.json:/etc/sing-box/config.json:ro
+    networks:
+      - app-network
+    restart: unless-stopped
+
+networks:
+  app-network:
+    driver: bridge
