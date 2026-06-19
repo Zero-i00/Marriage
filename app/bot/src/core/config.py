@@ -21,6 +21,8 @@ class Settings(BaseSettings):
     model_config = BaseConfig
 
     bot_token: SecretStr
+    bot_proxy_url: SecretStr
+
     server: ServerSettings = Field(default_factory=ServerSettings)
 
 
