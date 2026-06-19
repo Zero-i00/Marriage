@@ -5,6 +5,7 @@ from aiogram.enums import ParseMode
 
 from core.config import get_settings
 from handlers import root_router
+from keyboards.menu import set_super_user_menu
 
 settings = get_settings()
 
@@ -22,6 +23,8 @@ async def main() -> None:
     dp.include_router(root_router)
 
     await bot.delete_webhook(True)
+    await set_super_user_menu(bot, settings.bot_super_user_id)
+
     await dp.start_polling(bot)
 
 

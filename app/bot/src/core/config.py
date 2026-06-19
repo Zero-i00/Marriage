@@ -22,6 +22,7 @@ class Settings(BaseSettings):
 
     bot_token: SecretStr
     bot_proxy_url: SecretStr
+    bot_super_user_id: int
 
     server: ServerSettings = Field(default_factory=ServerSettings)
 
