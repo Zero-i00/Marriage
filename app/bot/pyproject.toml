@@ -10,6 +10,7 @@ dependencies = [
     "aiohttp-socks>=0.10",
     "pydantic>=2.13.4",
     "pydantic-settings>=2.14.1",
+    "soft-http>=0.1.0",
 ]
 
 [dependency-groups]

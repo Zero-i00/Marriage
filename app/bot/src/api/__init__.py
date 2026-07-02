@@ -1,19 +1,3 @@
-__all__ = [
-    "Client",
-    "make_client",
-    "ClientException",
-    "BadRequestError",
-    "ForbiddenError",
-    "NotFoundError",
-    "ConflictError",
-]
+__all__ = ["make_query_client"]
 
-from .client import Client
-from .exception import (
-    BadRequestError,
-    ClientException,
-    ConflictError,
-    ForbiddenError,
-    NotFoundError,
-)
-from .provider import make_client
+from .provider import make_query_client

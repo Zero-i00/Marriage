@@ -2,6 +2,7 @@ from datetime import datetime
 
 from pydantic import BaseModel, Field
 
+from schemas.drink import SchemaDrinkResponse
 from schemas.guest import SchemaGuestResponse
 
 
@@ -14,7 +15,7 @@ class SchemaInvitationResponse(BaseModel):
     comment: str | None
 
     guests: list[SchemaGuestResponse] = Field(default_factory=list)
-    drinks: list[SchemaGuestResponse] = Field(default_factory=list)
+    drinks: list[SchemaDrinkResponse] = Field(default_factory=list)
 
     created_at: datetime
     updated_at: datetime
