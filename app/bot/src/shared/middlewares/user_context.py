@@ -4,13 +4,13 @@ from typing import Any
 from aiogram import BaseMiddleware
 from aiogram.types import TelegramObject, User
 
-from api.context import current_user_id
+from shared.api.context import current_user_id
 
 
 class UserContextMiddleware(BaseMiddleware):
     """Кладёт id текущего Telegram-юзера в contextvar на время обработки апдейта.
 
-    `api.context.inject_user_id` (before_request-хук soft-http) читает его и
+    `shared.api.context.inject_bot_user_id` (before_request-хук soft-http) читает его и
     подставляет в заголовок `X-BOT-USER-ID` per-request — backend сам решает,
     супер-юзер это или нет. Без этого middleware заголовок нёс бы фиксированный
     admin id для любого вызывающего.

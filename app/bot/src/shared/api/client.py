@@ -2,7 +2,7 @@ from functools import lru_cache
 
 from soft_http import ClientConfig, RetryConfig, SoftClient
 
-from core.config import get_settings
+from shared.config import get_settings
 
 from .context import inject_bot_user_id
 

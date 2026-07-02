@@ -1,10 +1,13 @@
 from aiogram import Bot
 from aiogram.types import BotCommand, BotCommandScopeChat
 
+from .routes import Route
+
 SUPER_USER_COMMAND_LIST = [
-    BotCommand(command="start", description="Начать"),
-    BotCommand(command="drink", description="Напитки"),
-    BotCommand(command="invitation", description="Приглашения"),
+    BotCommand(command=Route.START, description="Начать"),
+    BotCommand(command=Route.DRINK, description="Напитки"),
+    BotCommand(command=Route.GUEST, description="Гости"),
+    BotCommand(command=Route.INVITATION, description="Приглашения"),
 ]
 
 

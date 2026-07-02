@@ -3,11 +3,11 @@ from aiogram.client.default import DefaultBotProperties
 from aiogram.client.session.aiohttp import AiohttpSession
 from aiogram.enums import ParseMode
 
-from api import make_query_client
-from core.config import get_settings
-from handlers import root_router
-from keyboards.menu import set_super_user_menu
-from middlewares import SuperUserOnlyMiddleware, UserContextMiddleware
+from features import root_router
+from shared.api import make_query_client
+from shared.config import get_settings
+from shared.menu import set_super_user_menu
+from shared.middlewares import SuperUserOnlyMiddleware, UserContextMiddleware
 
 settings = get_settings()
 
@@ -22,7 +22,7 @@ def init_bot() -> Bot:
     )
 
 
-def init_db() -> Dispatcher:
+def init_dispatcher() -> Dispatcher:
     dp = Dispatcher()
 
     dp.message.outer_middleware(SuperUserOnlyMiddleware(settings.bot_super_user_id))
@@ -37,13 +37,12 @@ def init_db() -> Dispatcher:
 
 async def main() -> None:
     bot = init_bot()
-    dp = init_db()
+    dp = init_dispatcher()
 
     await bot.delete_webhook(True)
     await set_super_user_menu(bot, settings.bot_super_user_id)
 
-    async with make_query_client() as query_client:
-        dp["query_client"] = query_client
+    async with make_query_client():
         await dp.start_polling(bot)
 
 
