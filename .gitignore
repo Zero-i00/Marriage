@@ -8,6 +8,7 @@
 
 # Claude tooling
 .claude/
+.omc/
 
 # Python
 __pycache__/

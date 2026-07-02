@@ -26,6 +26,7 @@ def init_db() -> Dispatcher:
     dp = Dispatcher()
 
     dp.message.outer_middleware(SuperUserOnlyMiddleware(settings.bot_super_user_id))
+    dp.callback_query.outer_middleware(SuperUserOnlyMiddleware(settings.bot_super_user_id))
 
     dp.update.middleware(UserContextMiddleware())
 

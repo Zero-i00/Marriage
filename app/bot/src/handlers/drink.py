@@ -1,23 +1,122 @@
-
-from aiogram import Router
+from aiogram import Bot, Router
 from aiogram.filters import Command
-from aiogram.types import Message
+from aiogram.fsm.context import FSMContext
+from aiogram.types import CallbackQuery, Message
 from soft_http import SoftClient
+from soft_http.exceptions.response import ClientResponseException
 
+from keyboards.drink import (
+    CallbackDrinkCreate,
+    CallbackDrinkDestroy,
+    CallbackDrinkDestroyMenu,
+    CallbackDrinkListMenu,
+    drink_delete_keyboard,
+    drink_menu_keyboard,
+)
+from schemas.drink import SchemaDrinkRequest
 from services.drink import get_drink_service
+from states.drink import FSMDrinkState
+from utils.format.drink import format_drink_list
 
 router = Router(name="drink")
 
 
-@router.message(Command('drink'))
+async def render_drink_menu(target: Message | CallbackQuery, query_client: SoftClient) -> None:
+    service = get_drink_service(query_client)
+    items = await service.list()
+    text = format_drink_list(items)
+    keyboard = drink_menu_keyboard(items)
+
+    if isinstance(target, CallbackQuery):
+        await target.message.edit_text(text, reply_markup=keyboard)
+        await target.answer()
+    else:
+        await target.answer(text, reply_markup=keyboard)
+
+
+@router.message(Command("drink"))
 async def get_drink_list_handler(message: Message, query_client: SoftClient) -> None:
+    await render_drink_menu(message, query_client)
+
+
+@router.callback_query(CallbackDrinkListMenu.filter())
+async def back_to_menu(callback: CallbackQuery, query_client: SoftClient) -> None:
+    await render_drink_menu(callback, query_client)
+
+
+@router.callback_query(CallbackDrinkCreate.filter())
+async def create_drink_start(callback: CallbackQuery, state: FSMContext) -> None:
+    await state.update_data(menu_message_id=callback.message.message_id)
+    await state.set_state(FSMDrinkState.title)
+    await callback.message.edit_text("Пришли название напитка:")
+    await callback.answer()
+
+
+@router.message(FSMDrinkState.title)
+async def create_drink_submit(
+    message: Message, state: FSMContext, query_client: SoftClient, bot: Bot
+) -> None:
+    title = message.text.strip() if message.text else ""
+
+    if not (1 <= len(title) <= 255):
+        await message.answer("Название должно быть от 1 до 255 символов. Попробуй ещё раз:")
+        return
+
     service = get_drink_service(query_client)
 
+    try:
+        await service.create(SchemaDrinkRequest(title=title))
+    except ClientResponseException as e:
+        if e.status_code == 409:
+            await message.answer("Такой напиток уже есть. Попробуй другое название:")
+            return
+        raise
+
+    data = await state.get_data()
+    await state.clear()
+
     items = await service.list()
+    text = format_drink_list(items)
+    keyboard = drink_menu_keyboard(items)
 
-    if len(items) == 0:
-        await message.answer("Не удалось найти напитки")
-        return 
+    menu_message_id = data.get("menu_message_id")
+    if menu_message_id:
+        await bot.edit_message_text(
+            chat_id=message.chat.id,
+            message_id=menu_message_id,
+            text=text,
+            reply_markup=keyboard,
+        )
+    else:
+        await message.answer(text, reply_markup=keyboard)
 
-    for item in items:
-        await message.answer(item.title)
+
+@router.callback_query(CallbackDrinkDestroyMenu.filter())
+async def show_delete_menu(callback: CallbackQuery, query_client: SoftClient) -> None:
+    service = get_drink_service(query_client)
+    items = await service.list()
+    await callback.message.edit_text(
+        "Выбери напиток для удаления:",
+        reply_markup=drink_delete_keyboard(items),
+    )
+    await callback.answer()
+
+
+@router.callback_query(CallbackDrinkDestroy.filter())
+async def delete_drink(
+    callback: CallbackQuery,
+    callback_data: CallbackDrinkDestroy,
+    query_client: SoftClient,
+) -> None:
+    service = get_drink_service(query_client)
+    try:
+        await service.destroy(callback_data.drink_id)
+    except ClientResponseException as e:
+        if e.status_code == 404:
+            await callback.answer("Напиток уже удалён")
+        else:
+            raise
+    else:
+        await callback.answer("Удалено")
+
+    await render_drink_menu(callback, query_client)
