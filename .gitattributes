@@ -1,0 +1,8 @@
+# Принудительно LF для скриптов, которые исполняются внутри Linux-контейнеров.
+# Без этого Git на Windows конвертирует их в CRLF при checkout, и шебанг ломается
+# (env: 'bash\r': No such file or directory → exit 127).
+*.sh text eol=lf
+entrypoint.sh text eol=lf
+
+# Нормализация остальных текстовых файлов на усмотрение Git.
+* text=auto

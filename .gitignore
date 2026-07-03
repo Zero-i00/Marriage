@@ -3,8 +3,12 @@
 .env.*
 !.env.example
 
+# Proxy sidecar configs (содержат VLESS UUID) — в git только *.example.json
+**/sing-box.json
+
 # Claude tooling
 .claude/
+.omc/
 
 # Python
 __pycache__/
