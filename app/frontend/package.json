@@ -10,6 +10,7 @@
     "format": "biome format --write"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.4.0",
     "clsx": "^2.1.1",
     "ky": "^2.0.2",
     "next": "16.2.9",
