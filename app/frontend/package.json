@@ -10,9 +10,14 @@
     "format": "biome format --write"
   },
   "dependencies": {
+    "clsx": "^2.1.1",
+    "ky": "^2.0.2",
     "next": "16.2.9",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "react-hook-form": "^7.80.0",
+    "tailwind-merge": "^3.6.0",
+    "valibot": "^1.4.2"
   },
   "devDependencies": {
     "@biomejs/biome": "2.2.0",

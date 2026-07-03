@@ -1,5 +1,10 @@
-import Image from "next/image";
+import { Fragment } from "react";
+import { HeroSection } from "@/features/hero/views/hero-section";
 
 export default function Home() {
-  return <div>hello world</div>;
+  return (
+    <Fragment>
+      <HeroSection />
+    </Fragment>
+  );
 }
