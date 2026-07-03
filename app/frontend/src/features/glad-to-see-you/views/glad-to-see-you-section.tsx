@@ -2,8 +2,8 @@ import type { ComponentProps } from "react";
 import { twMerge } from "tailwind-merge";
 import { ROOT_SECTION } from "@/shared/configs/section.config";
 
-export function HeroSection({
-  id = ROOT_SECTION.HERO,
+export function GladToSeeYouSection({
+  id = ROOT_SECTION.GLAD_TO_SEE_YOU,
   className,
   ...rest
 }: ComponentProps<"section">) {
