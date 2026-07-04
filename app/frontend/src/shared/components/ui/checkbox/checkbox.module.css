@@ -1,0 +1,296 @@
+/* Wrapper */
+.wrapper {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* Label container */
+.label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    transition: opacity 0.2s ease;
+}
+
+.label--disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.label--error {
+    /* Error state handled by checkbox itself */
+}
+
+/* Container for input and checkbox visual */
+.container {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* Hide native checkbox */
+.input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    margin: 0;
+    padding: 0;
+}
+
+/* Custom checkbox visual */
+.checkbox {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--checkbox-border-color, var(--color-primary-400));
+    border-radius: var(--rounded-sm);
+    background-color: var(--checkbox-bg-color, transparent);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+}
+
+/* Hover effect - increase border size */
+.label:hover .checkbox:not(.checkbox--disabled) {
+    box-shadow: 0 0 0 4px var(--checkbox-hover-bg, rgba(0, 0, 0, 0.04));
+}
+
+/* Focus visible */
+.input:focus-visible + .checkbox {
+    outline: 2px solid var(--color-primary-500);
+    outline-offset: 2px;
+}
+
+/* Icon (checkmark) */
+.icon {
+    width: 14px;
+    height: 14px;
+    color: var(--color-white);
+    animation: checkmark-scale 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    z-index: 2;
+}
+
+@keyframes checkmark-scale {
+    0% {
+        transform: scale(0);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Checked state */
+.checkbox--checked {
+    --checkbox-bg-color: var(--checkbox-checked-bg, var(--color-primary-500));
+    --checkbox-border-color: var(--checkbox-checked-bg, var(--color-primary-500));
+    --checkbox-hover-bg: var(--color-primary-opacity-lighter);
+}
+
+/* Disabled state */
+.checkbox--disabled {
+    cursor: not-allowed;
+    border-color: var(--color-primary-300);
+    background-color: var(--color-primary-100);
+}
+
+.checkbox--disabled.checkbox--checked {
+    background-color: var(--color-primary-300);
+    border-color: var(--color-primary-300);
+}
+
+/* Error state */
+.checkbox--error {
+    --checkbox-border-color: var(--color-error-500);
+}
+
+.checkbox--error.checkbox--checked {
+    --checkbox-checked-bg: var(--color-error-500);
+}
+
+/* Label text */
+.label-text {
+    font-size: var(--font-size-body-1);
+    line-height: var(--line-height-body-1);
+    color: var(--color-primary-900);
+    transition: color 0.2s ease;
+}
+
+.label--disabled .label-text {
+    color: var(--color-primary-400);
+}
+
+/* Hint text */
+.hint {
+    font-size: var(--font-size-body-2);
+    line-height: var(--line-height-body-2);
+    color: var(--color-primary-600);
+    margin-left: 26px;
+    transition: color 0.2s ease;
+}
+
+.hint--error {
+    color: var(--color-error-500);
+}
+
+/* Размеры */
+
+/* Extra Small */
+.checkbox--xs {
+    width: 18px;
+    height: 18px;
+    border-width: 2px;
+}
+
+.checkbox--xs .icon {
+    width: var(--icon-xs);
+    height: var(--icon-xs);
+}
+
+/* Label text для xs */
+.label--xs .label-text {
+    font-size: 10px;
+    line-height: 14px;
+}
+
+/* Hint для xs */
+.label--xs + .hint {
+    font-size: 10px;
+    line-height: 14px;
+    margin-left: 14px;
+}
+
+/* Tiny */
+.checkbox--tn {
+    width: 24px;
+    height: 24px;
+    border-width: 2px;
+}
+
+.checkbox--tn .icon {
+    width: var(--icon-tn);
+    height: var(--icon-tn);
+}
+
+/* Label text для tn */
+.label--tn .label-text {
+    font-size: var(--font-size-body-2);
+    font-weight: var(--font-weight-body-2);
+    line-height: var(--line-height-body-2);
+}
+
+/* Hint для tn */
+.label--tn + .hint {
+    font-size: 13px;
+    line-height: 17px;
+    margin-left: 22px;
+}
+
+/* Small */
+.checkbox--sm {
+    width: 22px;
+    height: 22px;
+    border-width: 2px;
+}
+
+.checkbox--sm .icon {
+    width: var(--icon-sm);
+    height: var(--icon-sm);
+}
+
+/* Label text для sm */
+.label--sm .label-text {
+    font-size: var(--font-size-overline);
+    font-weight: var(--font-weight-overline);
+    line-height: var(--line-height-overline);
+}
+
+/* Hint для sm */
+.label--sm + .hint {
+    font-size: 12px;
+    line-height: 16px;
+    margin-left: 20px;
+}
+
+/* Medium (значения по умолчанию) */
+.checkbox--md {
+    width: 26px;
+    height: 26px;
+    border-width: 2px;
+}
+
+.checkbox--md .icon {
+    width: 14px;
+    height: 14px;
+}
+
+.label--md .label-text {
+    font-size: var(--font-size-body-1);
+    line-height: var(--line-height-body-1);
+    font-weight: var(--font-weight-body-1);
+}
+
+.label--md + .hint {
+    font-size: var(--font-size-body-2);
+    line-height: var(--line-height-body-2);
+    font-weight: var(--font-weight-body-2);
+    margin-left: 26px;
+}
+
+/* Large */
+.checkbox--lg {
+    width: 30px;
+    height: 30px;
+    border-width: 3px;
+}
+
+.checkbox--lg .icon {
+    width: 17px;
+    height: 17px;
+}
+
+.label--lg .label-text {
+    font-size: 18px;
+    line-height: 24px;
+}
+
+.label--lg + .hint {
+    font-size: 15px;
+    line-height: 20px;
+    margin-left: 30px;
+}
+
+/* Extra Large */
+.checkbox--xl {
+    width: 34px;
+    height: 34px;
+    border-width: 3px;
+}
+
+.checkbox--xl .icon {
+    width: 20px;
+    height: 20px;
+}
+
+.label--xl .label-text {
+    font-size: 20px;
+    line-height: 28px;
+}
+
+.label--xl + .hint {
+    font-size: 16px;
+    line-height: 22px;
+    margin-left: 36px;
+}

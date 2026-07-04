@@ -1,16 +1,37 @@
 @import "tailwindcss";
+@import "./styles/index.css";
 
-:root {
-}
-
-@theme inline {
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-  }
+* {
+  box-sizing: border-box;
+  --font-montserrat: var(--font-montserrat)
 }
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  min-width: 320px;
+  overflow-x: hidden;
+  background: var(--color-white);
+  font-family: var(--font-montserrat), sans-serif;
+}
+
+.wrapper {
+  width: 100%;
+  max-width: 1920px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+@layer base {
+  .container-x {
+    padding: 0 6rem;
+  }
+
+  .container-y {
+    padding: 8rem 0;
+  }
+
+  .container-section {
+    padding: 8rem 6rem;
+  }
 }
