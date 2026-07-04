@@ -1,0 +1,15 @@
+/*
+ * Прогрессивное улучшение: там, где браузер поддерживает scroll-driven анимации,
+ * входные .animate-fade-in-up/.animate-draw (из styles/animations.css) больше не
+ * играют по таймеру при монтировании, а привязываются к появлению элемента во
+ * viewport через `animation-timeline: view()` — чистый CSS, без JS/IntersectionObserver.
+ * Без поддержки — остаётся исходное поведение по времени (см. animations.css).
+ */
+@supports (animation-timeline: view()) {
+  .about-reveal .animate-fade-in-up,
+  .about-reveal .animate-draw {
+    animation-delay: 0s;
+    animation-timeline: view();
+    animation-range: entry 0% entry 100%;
+  }
+}

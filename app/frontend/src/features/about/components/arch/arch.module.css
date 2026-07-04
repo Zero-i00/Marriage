@@ -1,0 +1,67 @@
+/* Ambient-анимация арки: кольца парят, гирлянды покачиваются, монограмма едва дрейфует. */
+
+.ringGroup {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: float 6s ease-in-out infinite alternate;
+}
+
+.garlandTop {
+  transform-box: fill-box;
+  transform-origin: top;
+  animation: sway 5s ease-in-out infinite;
+}
+
+.garlandBottom {
+  transform-box: fill-box;
+  transform-origin: bottom;
+  animation: sway 5s ease-in-out infinite;
+  animation-delay: 0.4s;
+}
+
+.mono {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: drift 8s ease-in-out infinite;
+}
+
+@keyframes float {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(5px);
+  }
+}
+
+@keyframes sway {
+  0%,
+  100% {
+    transform: rotate(-2deg);
+  }
+
+  50% {
+    transform: rotate(2deg);
+  }
+}
+
+@keyframes drift {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ringGroup,
+  .garlandTop,
+  .garlandBottom,
+  .mono {
+    animation: none;
+  }
+}
