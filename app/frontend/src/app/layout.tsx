@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import type { PropsWithChildren } from "react";
+import { Providers } from "@/app/providers";
 import { Footer } from "@/shared/components/layout/footer";
-import {Montserrat} from "next/dist/compiled/@next/font/dist/google";
+import { Montserrat } from "next/font/google";
 import {SEO_DESCRIPTION, SEO_KEYWORDS, SEO_URL, SITE_NAME} from "@/shared/constants/seo.constant";
 
 const montserrat = Montserrat({
@@ -36,8 +37,10 @@ export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="ru" className={`h-full antialiased`}>
       <body className={`${montserrat.variable} min-h-full flex flex-col`}>
-        <main>{children}</main>
-        <Footer />
+        <Providers>
+          <main>{children}</main>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );
