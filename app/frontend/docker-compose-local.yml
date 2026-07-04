@@ -10,7 +10,7 @@ services:
       # next dev в bind-mount volume не видит fs-события — переключаем на polling.
       WATCHPACK_POLLING: "true"
     ports:
-      - "${PORT:-3000}:${PORT:-3000}"
+      - "${NEXT_PUBLIC_PORT:-3000}:${NEXT_PUBLIC_PORT:-3000}"
     volumes:
       - .:/app
       - marriage-frontend-node-modules:/app/node_modules
