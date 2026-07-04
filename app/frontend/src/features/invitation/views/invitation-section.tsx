@@ -1,28 +1,21 @@
-"use client";
-
-import Cookies from "js-cookie";
-import Image from "next/image";
-import { type ComponentProps, useEffect, useState } from "react";
+import { cookies } from "next/headers";
+import type { ComponentProps } from "react";
 import { twMerge } from "tailwind-merge";
 import { InvitationForm } from "@/features/invitation/components/forms/invitation-form";
-import { AnimatedSection } from "@/shared/components/animated-section";
-import { delay } from "@/shared/lib/section-animation";
+import { AnimatedSection } from "@/shared/components/layout/animated-section";
+import { TitleImage } from "@/shared/components/elements/title-image";
+import { Typography } from "@/shared/components/ui/typography";
 import { ROOT_SECTION } from "@/shared/configs/section.config";
 import { COOKIE_INVITATION_PASSED } from "@/shared/constants/cookie.constant";
+import { delay } from "@/shared/lib/section-animation";
 
-export function InvitationSection({
+export async function InvitationSection({
   id = ROOT_SECTION.INVITATION,
   className,
   ...rest
 }: ComponentProps<"section">) {
-  // FIXME Бред какой-то, неужели без useEffect на не можем inline в переменной получить куку, чтобы отрисовать состояние компонента. ПО хорошему нужно избавиться от useEffect и useState
-  // ponytail: гость мог уже отправить анкету — прячем секцию по cookie вместо
-  // похода на бэк за статусом; читаем на клиенте, секция ниже фолда, мигания нет
-  const [isPassed, setIsPassed] = useState(false);
-
-  useEffect(() => {
-    setIsPassed(Cookies.get(COOKIE_INVITATION_PASSED) === "true");
-  }, []);
+  const isPassed =
+    (await cookies()).get(COOKIE_INVITATION_PASSED)?.value === "true";
 
   if (isPassed) return null;
 
@@ -30,15 +23,11 @@ export function InvitationSection({
     <AnimatedSection
       id={id}
       className={twMerge(
-          //   FIXME вместо px и py используй container миксины, описанные в global.css
-          //   FIXME если пишешь адаптив, то выноси его отдельной строчкой, например 1 строка в twMerge функции под desktop, потом запятая, новая строчка под sm
-        "relative flex flex-col gap-10 overflow-hidden bg-[var(--color-natural-100)] px-6 py-20 md:px-24 md:py-32",
+        "container-section relative flex flex-col gap-10 overflow-hidden bg-(--color-natural-100)",
         className,
       )}
       {...rest}
     >
-      {/* ponytail: декоративный росчерк — точные координаты из макета недоступны
-          (нет доступа к Figma-файлу), позиционируем приближённо по пропорциям */}
       <svg
         className="pointer-events-none absolute left-0 top-[22%] h-[70%] w-auto max-[900px]:hidden"
         viewBox="0 0 352 1203"
@@ -58,21 +47,21 @@ export function InvitationSection({
       </svg>
 
       <div className="flex justify-center md:justify-end">
-        <h2 className="sr-only">Анкета гостя</h2>
-        {/* intrinsic 1688x320, capH=320 → ширина = intrinsicW*74/320, единый кегль со всеми title */}
-        {/* FIXME мне не нравятся конкретные числа width и height, как мы будем с ними адатировать под мобилки все эти картинки?*/}
-        <Image
+        <Typography variant="h2" as="h2" className="sr-only">
+          Анкета гостя
+        </Typography>
+        <TitleImage
           src="/invitation/title.webp"
           alt="Анкета"
-          width={1688}
-          height={320}
+          intrinsic={[1688, 320]}
+          width="clamp(169px,30vw,390px)"
           priority
-          className="animate-fade-in-up h-auto w-[clamp(169px,30vw,390px)]"
+          className="animate-fade-in-up"
         />
       </div>
 
       <div className="flex justify-center">
-        <InvitationForm onSubmitted={() => setIsPassed(true)} />
+        <InvitationForm />
       </div>
     </AnimatedSection>
   );

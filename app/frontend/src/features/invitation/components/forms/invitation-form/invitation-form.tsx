@@ -4,6 +4,7 @@ import { valibotResolver } from "@hookform/resolvers/valibot";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Cookies from "js-cookie";
 import { Plus, Trash } from "lucide-react";
+import { useRouter } from "next/navigation";
 import type { ComponentProps } from "react";
 import { useTransition } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
@@ -33,18 +34,10 @@ const DEFAULT_VALUES: FormData = {
   guests: [{ full_name: "" }],
 };
 
-type Props = ComponentProps<"form"> & {
-  // FIXME убери этот пропс, просто при onSuccess будем ставить куку + сделай не type Props, а interface Props extends ComponentProps<"form">
-  /** Вызывается после успешной отправки анкеты (см. cookie-гейт в InvitationSection) */
-  onSubmitted?: () => void;
-};
+interface Props extends ComponentProps<"form"> {}
 
-export function InvitationForm({
-  method = "POST",
-  className,
-  onSubmitted,
-  ...rest
-}: Props) {
+export function InvitationForm({ method = "POST", className, ...rest }: Props) {
+  const router = useRouter();
   const [isMounting, startTransition] = useTransition();
 
   const { data: drinks = [] } = useQuery({
@@ -73,7 +66,7 @@ export function InvitationForm({
           sameSite: "lax",
         });
         toast.success("Анкета отправлена!");
-        onSubmitted?.();
+        router.refresh();
       });
     },
     onError: async (error) => {
@@ -133,10 +126,7 @@ export function InvitationForm({
       />
 
       <div className="flex flex-col gap-3">
-        <Typography
-          variant="subtitle-1"
-          className="text-(--color-primary-900)"
-        >
+        <Typography variant="subtitle-1" className="text-(--color-primary-900)">
           Будет ли с Вами ещё кто-то?
         </Typography>
 
@@ -145,10 +135,10 @@ export function InvitationForm({
           className="flex w-fit items-center gap-3 text-left"
           onClick={() => append({ full_name: "" })}
         >
-          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-[var(--rounded-sm)] border-2 border-[var(--color-primary-400)]">
+          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-(--rounded-sm) border-2 border-[var(--color-primary-400)]">
             <Plus
               size={ICON_SIZE.xs}
-              className="text-[var(--color-primary-700)]"
+              className="text-(--color-primary-700)"
             />
           </span>
           <Typography variant="body-2">
@@ -187,26 +177,18 @@ export function InvitationForm({
         <Checkbox label="Нет" isChecked={fields.length === 1} />
       </div>
 
-      <Controller
-        control={control}
-        name="drink_ids"
-        render={({ field }) => (
-          <div className="flex flex-col gap-3">
-            <Typography
-              variant="subtitle-1"
-              className="text-(--color-primary-900)"
-            >
-              Уточните Ваши предпочтения в алкоголе:
-            </Typography>
-            {/* FIXME можно без fallback. То есть если нет напитков - просто не показываем их, чтобы пользователь даже не знал, что потенциально можно было выбрать напитки */}
-            {drinks.length === 0 ? (
+      {drinks.length > 0 && (
+        <Controller
+          control={control}
+          name="drink_ids"
+          render={({ field }) => (
+            <div className="flex flex-col gap-3">
               <Typography
-                variant="body-2"
-                className="text-gray-600"
+                variant="subtitle-1"
+                className="text-(--color-primary-900)"
               >
-                Пока нет вариантов на выбор
+                Уточните Ваши предпочтения в алкоголе:
               </Typography>
-            ) : (
               <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
                 {drinks.map((drink) => {
                   const isChecked = field.value.includes(drink.id);
@@ -226,10 +208,10 @@ export function InvitationForm({
                   );
                 })}
               </div>
-            )}
-          </div>
-        )}
-      />
+            </div>
+          )}
+        />
+      )}
 
       <Input
         label="Оставьте свой любимый музыкальный трек для дискотеки"

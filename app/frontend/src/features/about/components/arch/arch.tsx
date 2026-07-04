@@ -1,4 +1,5 @@
-import type { ReactNode } from "react";
+import type { ComponentProps, ReactNode } from "react";
+import { twMerge } from "tailwind-merge";
 import type { DelayStyle } from "@/shared/lib/section-animation";
 import styles from "./arch.module.css";
 
@@ -17,15 +18,15 @@ const delay = (value: string): DelayStyle => ({ "--delay": value });
  * (оба класса — из общего `styles/animations.css`), а затем оживают бесконечными
  * ambient-анимациями на чистом CSS (без JS, см. arch.module.css).
  */
-// FIXME Дополни ComponentProps<"svg"> + прокинь ...rest и базовые настройки
-export function Arch() {
+export function Arch({ className, ...rest }: ComponentProps<"svg">) {
   return (
     <svg
       viewBox="0 0 700 800"
       fill="none"
-      className="h-auto w-full"
       role="img"
       aria-label="Арка с обручальными кольцами и монограммой А и В"
+      className={twMerge("h-auto w-full", className)}
+      {...rest}
     >
       {/* контур арки и линия-подвес — рисуются штрихом */}
       <path
@@ -63,7 +64,7 @@ export function Arch() {
       />
 
       {/* переплетённые кольца — рисуются штрихом, затем парят */}
-      <g className={styles.ringGroup}>
+      <g className={styles.ring_group}>
         <path
           className="animate-draw"
           style={delay("0.5s")}
@@ -88,7 +89,7 @@ export function Arch() {
 
       {/* гирлянды оливковых листьев — верхние (у весны арки) и нижние (у основания) */}
       <Garland
-        sway={styles.garlandTop}
+        sway={styles.garland_top}
         entranceDelay="0.6s"
         stemDelay="0.6s"
         stem="M160 160C203.333 210 226.667 276.667 233.333 356.667"
@@ -120,7 +121,7 @@ export function Arch() {
         />
       </Garland>
       <Garland
-        sway={styles.garlandTop}
+        sway={styles.garland_top}
         entranceDelay="0.65s"
         stemDelay="0.65s"
         stem="M539.999 160C496.666 210 473.333 276.667 466.666 356.667"
@@ -152,7 +153,7 @@ export function Arch() {
         />
       </Garland>
       <Garland
-        sway={styles.garlandBottom}
+        sway={styles.garland_bottom}
         entranceDelay="0.7s"
         stemDelay="0.7s"
         stem="M130 783.333C140 726.667 166.667 686.667 210 660"
@@ -179,7 +180,7 @@ export function Arch() {
         />
       </Garland>
       <Garland
-        sway={styles.garlandBottom}
+        sway={styles.garland_bottom}
         entranceDelay="0.75s"
         stemDelay="0.75s"
         stem="M570 783.333C560 726.667 533.333 686.667 490 660"
