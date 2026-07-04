@@ -30,6 +30,9 @@ out/
 next-env.d.ts
 bun-debug.log*
 
+# Playwright MCP
+.playwright-mcp/
+
 # IDE
 .vscode/
 .idea/
