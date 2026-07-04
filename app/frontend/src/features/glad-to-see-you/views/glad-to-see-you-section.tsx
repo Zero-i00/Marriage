@@ -1,6 +1,11 @@
-import type { ComponentProps } from "react";
+import Image from "next/image";
+import type { ComponentProps, CSSProperties } from "react";
 import { twMerge } from "tailwind-merge";
 import { ROOT_SECTION } from "@/shared/configs/section.config";
+
+function delay(seconds: number): CSSProperties {
+  return { "--delay": `${seconds}s` } as CSSProperties;
+}
 
 export function GladToSeeYouSection({
   id = ROOT_SECTION.GLAD_TO_SEE_YOU,
@@ -8,6 +13,39 @@ export function GladToSeeYouSection({
   ...rest
 }: ComponentProps<"section">) {
   return (
-    <section id={id} className={twMerge(``, className)} {...rest}></section>
+    <section
+      id={id}
+      className={twMerge(
+        "relative flex min-h-[40svh] flex-col items-center justify-center gap-8 overflow-hidden bg-[var(--color-natural-100)] p-[3rem_1.5rem] md:min-h-[60svh] md:flex-row md:justify-end md:gap-0 md:p-[4rem_6rem]",
+        className,
+      )}
+      {...rest}
+    >
+      <svg
+        className="h-auto w-[85%] md:absolute md:top-1/2 md:left-0 md:w-[55%] md:-translate-y-1/2"
+        viewBox="0 0 1043 223"
+        fill="none"
+        preserveAspectRatio="xMidYMid meet"
+        aria-hidden="true"
+      >
+        <path
+          className="animate-draw"
+          style={delay(0.1)}
+          d="M1042 184.955C1024.09 188.362 1003.53 185.636 981.474 184.955C959.42 184.273 866.227 161.105 849.81 157.527C833.394 153.95 789.616 152.076 775.521 152.758C761.426 153.439 748.492 156.505 736.884 161.105C725.276 165.704 720.468 170.815 713.005 177.97C705.543 185.125 704.548 197.561 704.383 201.138C704.217 204.716 708.528 213.233 713.835 213.063C719.141 212.893 722.789 208.293 725.94 201.138C729.09 193.983 728.759 184.444 727.764 178.652C726.769 172.86 717.483 165.364 713.005 163.49C708.528 161.616 695.096 159.572 681.001 161.105C666.906 162.638 653.309 171.326 643.525 176.778C633.742 182.229 606.215 203.693 603.893 204.886C601.572 206.078 598.421 208.123 597.924 206.419C597.426 204.716 598.421 204.034 603.893 195.857C609.366 187.68 629.264 168.089 635.732 159.572C642.199 151.054 662.098 123.116 672.876 102.674C687.187 75.5326 690.619 46.638 690.619 33.681C690.619 17.6126 685.976 11.8759 680.172 6.42459C674.368 0.973299 660.592 1.63779 648.079 4.49521C637.632 6.88052 622.3 17.3272 613.511 24.8227C604.722 32.3182 594.939 48.6721 591.457 57.5304C587.974 66.3887 584.989 82.2316 585.321 88.5346C585.653 94.8377 590.13 96.8819 591.457 96.8819C592.783 96.8819 597.977 96.4775 599.161 91.2047C600.653 84.561 598.272 75.3619 591.457 64.9704C586.853 57.9549 573.955 34.8179 562.845 22.3823C551.735 9.94647 539.464 0.408705 527.691 1.6007C515.917 2.79269 509.865 8.58368 506.631 13.6943C504.475 17.1013 501.079 25.3335 500.582 36.0656C500.084 46.7978 501.742 60.0854 504.893 74.5653C508.044 89.0453 513.019 101.992 516.998 111.021C520.978 120.05 532.254 138.618 541.374 151.394C548.671 161.616 576.363 195.857 589.297 211.7C589.656 212.25 589.841 213.35 587.719 213.35C585.066 213.35 506.677 198.333 482.421 187.456C401.996 151.394 286.914 121.189 178.963 159.572C120.935 180.204 -146.715 298.867 -353 139.928"
+          stroke="var(--color-primary-900)"
+          strokeWidth="3"
+          pathLength="1"
+        />
+      </svg>
+
+      <Image
+        src="/glad-to-see-you/title.webp"
+        alt="Мы будем рады видеть вас!"
+        width={520}
+        height={220}
+        className="animate-fade-in-up relative z-10 h-auto w-[clamp(11rem,55vw,16rem)] md:w-[clamp(14rem,30vw,26rem)]"
+        style={delay(0.4)}
+      />
+    </section>
   );
 }
