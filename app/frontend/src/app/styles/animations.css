@@ -26,18 +26,6 @@
   }
 }
 
-.animate-fade-in-up {
-  animation: fade-in-up 0.9s ease-out both;
-  animation-delay: var(--delay, 0s);
-}
-
-.animate-draw {
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  animation: draw-line 1.4s ease-in-out both;
-  animation-delay: var(--delay, 0s);
-}
-
 /* Тот же приём, но для path, у которого ближний к имени конец — это КОНЕЦ d, а не начало */
 @keyframes draw-line-reverse {
   from {
@@ -49,11 +37,49 @@
   }
 }
 
+/*
+ * Scroll-triggered: базовое состояние — скрыто, анимация играет один раз, когда
+ * shared/components/animated-section навешивает `.in-view` (IntersectionObserver).
+ * Без JS `.in-view` не появится — фолбэк ниже показывает контент как есть.
+ */
+.animate-fade-in-up {
+  opacity: 0;
+}
+
+.animate-draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
 .animate-draw-reverse {
   stroke-dasharray: 1;
   stroke-dashoffset: -1;
+}
+
+.in-view .animate-fade-in-up {
+  animation: fade-in-up 0.9s ease-out both;
+  animation-delay: var(--delay, 0s);
+}
+
+.in-view .animate-draw {
+  animation: draw-line 1.4s ease-in-out both;
+  animation-delay: var(--delay, 0s);
+}
+
+.in-view .animate-draw-reverse {
   animation: draw-line-reverse 1.4s ease-in-out both;
   animation-delay: var(--delay, 0s);
+}
+
+@media (scripting: none) {
+  .animate-fade-in-up {
+    opacity: 1;
+  }
+
+  .animate-draw,
+  .animate-draw-reverse {
+    stroke-dashoffset: 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

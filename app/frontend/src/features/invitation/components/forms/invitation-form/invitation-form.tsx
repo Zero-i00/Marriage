@@ -34,6 +34,7 @@ const DEFAULT_VALUES: FormData = {
 };
 
 type Props = ComponentProps<"form"> & {
+  // FIXME убери этот пропс, просто при onSuccess будем ставить куку + сделай не type Props, а interface Props extends ComponentProps<"form">
   /** Вызывается после успешной отправки анкеты (см. cookie-гейт в InvitationSection) */
   onSubmitted?: () => void;
 };
@@ -113,7 +114,7 @@ export function InvitationForm({
           <div className="flex flex-col gap-3">
             <Typography
               variant="subtitle-1"
-              className="text-[var(--color-primary-900)]"
+              className="text-(--color-primary-900)"
             >
               Планируете ли Вы присутствовать на свадьбе?
             </Typography>
@@ -134,7 +135,7 @@ export function InvitationForm({
       <div className="flex flex-col gap-3">
         <Typography
           variant="subtitle-1"
-          className="text-[var(--color-primary-900)]"
+          className="text-(--color-primary-900)"
         >
           Будет ли с Вами ещё кто-то?
         </Typography>
@@ -193,14 +194,15 @@ export function InvitationForm({
           <div className="flex flex-col gap-3">
             <Typography
               variant="subtitle-1"
-              className="text-[var(--color-primary-900)]"
+              className="text-(--color-primary-900)"
             >
               Уточните Ваши предпочтения в алкоголе:
             </Typography>
+            {/* FIXME можно без fallback. То есть если нет напитков - просто не показываем их, чтобы пользователь даже не знал, что потенциально можно было выбрать напитки */}
             {drinks.length === 0 ? (
               <Typography
                 variant="body-2"
-                className="text-[var(--color-gray-600)]"
+                className="text-gray-600"
               >
                 Пока нет вариантов на выбор
               </Typography>

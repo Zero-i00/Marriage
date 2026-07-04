@@ -1,11 +1,9 @@
 import Image from "next/image";
-import type { ComponentProps, CSSProperties } from "react";
+import type { ComponentProps } from "react";
 import { twMerge } from "tailwind-merge";
+import { AnimatedSection } from "@/shared/components/animated-section";
+import { delay } from "@/shared/lib/section-animation";
 import { ROOT_SECTION } from "@/shared/configs/section.config";
-
-function delay(seconds: number): CSSProperties {
-  return { "--delay": `${seconds}s` } as CSSProperties;
-}
 
 export function GladToSeeYouSection({
   id = ROOT_SECTION.GLAD_TO_SEE_YOU,
@@ -13,14 +11,17 @@ export function GladToSeeYouSection({
   ...rest
 }: ComponentProps<"section">) {
   return (
-    <section
+    <AnimatedSection
       id={id}
       className={twMerge(
-        "relative flex min-h-[40svh] flex-col items-center justify-center gap-8 overflow-hidden bg-[var(--color-natural-100)] p-[3rem_1.5rem] md:min-h-[60svh] md:flex-row md:justify-end md:gap-0 md:p-[4rem_6rem]",
+          //   FIXME вместо px и py используй container миксины, описанные в global.css
+          //   FIXME если пишешь адаптив, то выноси его отдельной строчкой, например 1 строка в twMerge функции под desktop, потом запятая, новая строчка под sm
+        "relative flex min-h-[40svh] flex-col items-center justify-center gap-8 overflow-hidden bg-(--color-natural-100) p-[3rem_1.5rem] md:min-h-[60svh] md:flex-row md:justify-end md:gap-0 md:p-[4rem_6rem]",
         className,
       )}
       {...rest}
     >
+      {/* FIXME Визуальнро это линия должна начинаться от нижнего края картинки ниже */}
       <svg
         className="h-auto w-[85%] md:absolute md:top-1/2 md:left-0 md:w-[55%] md:-translate-y-1/2"
         viewBox="0 0 1043 223"
@@ -38,14 +39,16 @@ export function GladToSeeYouSection({
         />
       </svg>
 
+      {/* intrinsic 2716x1280, capH≈305 → ширина = intrinsicW*74/305, единый кегль со всеми title */}
+      {/* FIXME мне не нравятся конкретные числа width и height, как мы будем с ними адатировать под мобилки все эти картинки?*/}
       <Image
         src="/glad-to-see-you/title.webp"
         alt="Мы будем рады видеть вас!"
-        width={520}
-        height={220}
-        className="animate-fade-in-up relative z-10 h-auto w-[clamp(11rem,55vw,16rem)] md:w-[clamp(14rem,30vw,26rem)]"
+        width={2716}
+        height={1280}
+        className="animate-fade-in-up relative z-10 h-auto w-[clamp(285px,51vw,659px)]"
         style={delay(0.4)}
       />
-    </section>
+    </AnimatedSection>
   );
 }

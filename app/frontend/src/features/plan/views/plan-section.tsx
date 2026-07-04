@@ -1,14 +1,9 @@
 import Image from "next/image";
-import type { ComponentProps, CSSProperties } from "react";
+import type { ComponentProps } from "react";
 import { twMerge } from "tailwind-merge";
+import { AnimatedSection } from "@/shared/components/animated-section";
+import { delay } from "@/shared/lib/section-animation";
 import { ROOT_SECTION } from "@/shared/configs/section.config";
-
-/** Стиль с CSS-переменной `--delay`, которую читает `.animate-*` из styles/animations.css. */
-type DelayStyle = CSSProperties & { "--delay"?: string };
-
-function delay(seconds: number): DelayStyle {
-  return { "--delay": `${seconds}s` };
-}
 
 // Каждая картинка уже содержит линию-коннектор, иконку, время и подпись целиком.
 const TIMELINE = [
@@ -55,26 +50,32 @@ export function PlanSection({
   className,
   ...rest
 }: ComponentProps<"section">) {
+  // FIXME А если завтра добавим ещё таймлайнов, а ну как нормально дели через length массив
   const left = TIMELINE.slice(0, 3);
   const right = TIMELINE.slice(3);
 
   return (
-    <section
+    <AnimatedSection
       id={id}
       className={twMerge(
+          //   FIXME вместо px и py используй container миксины, описанные в global.css
+          //   FIXME если пишешь адаптив, то выноси его отдельной строчкой, например 1 строка в twMerge функции под desktop, потом запятая, новая строчка под sm
         "flex flex-col gap-10 bg-[var(--color-natural-100)] px-6 py-20 md:px-24 md:py-32",
         className,
       )}
       {...rest}
     >
       <div className="animate-fade-in-up flex justify-end" style={delay(0)}>
+        {/* FIXME Всегда везде во всех компонентах и секциях нужно использовать для отображения текста только компонент Typography: h1, ..., span, p, address, и так длжее*/}
         <h2 className="sr-only">План дня</h2>
+        {/* intrinsic 1200x880, capH≈335 → ширина = intrinsicW*74/335, единый кегль со всеми title */}
+        {/* FIXME мне не нравятся конкретные числа width и height, как мы будем с ними адатировать под мобилки все эти картинки?*/}
         <Image
           src="/plan/title.webp"
           alt="План дня"
-          width={480}
-          height={352}
-          className="h-auto w-full max-w-xs md:max-w-sm"
+          width={1200}
+          height={880}
+          className="h-auto w-[clamp(115px,21vw,265px)]"
         />
       </div>
 
@@ -114,6 +115,6 @@ export function PlanSection({
           ))}
         </ul>
       </div>
-    </section>
+    </AnimatedSection>
   );
 }

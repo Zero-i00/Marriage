@@ -1,12 +1,10 @@
 import Image from "next/image";
-import type { ComponentProps, CSSProperties } from "react";
+import type { ComponentProps } from "react";
 import { twMerge } from "tailwind-merge";
+import { AnimatedSection } from "@/shared/components/animated-section";
+import { delay } from "@/shared/lib/section-animation";
 import { Typography } from "@/shared/components/ui/typography";
 import { ROOT_SECTION } from "@/shared/configs/section.config";
-
-function delay(seconds: number): CSSProperties {
-  return { "--delay": `${seconds}s` } as CSSProperties;
-}
 
 export function HeroSection({
   id = ROOT_SECTION.HERO,
@@ -14,27 +12,31 @@ export function HeroSection({
   ...rest
 }: ComponentProps<"section">) {
   return (
-    <section
+    <AnimatedSection
       id={id}
       className={twMerge(
-        "relative flex min-h-[100svh] flex-col justify-between overflow-hidden bg-[var(--color-natural-100)] px-24 py-24 max-[900px]:justify-start max-[900px]:gap-10 max-[900px]:px-6 max-[900px]:py-12",
+        //   FIXME вместо px и py используй container миксины, описанные в global.css
+        //   FIXME если пишешь адаптив, то выноси его отдельной строчкой, например 1 строка в twMerge функции под desktop, потом запятая, новая строчка под sm
+        "relative flex min-h-svh flex-col justify-between overflow-hidden bg-(--color-natural-100) px-24 py-24 max-[900px]:justify-start max-[900px]:gap-10 max-[900px]:px-6 max-[900px]:py-12",
         className,
       )}
       {...rest}
     >
       <div className="flex items-center justify-start max-[900px]:justify-center">
+        {/* intrinsic 2501x400, capH=400 → ширина = intrinsicW*80/400, единый кегль имён hero */}
+        {/* FIXME мне не нравятся конкретные числа width и height, как мы будем с ними адатировать под мобилки все эти картинки?*/}
         <Image
           src="/hero/varvara.webp"
           alt="Варвара"
-          width={520}
-          height={140}
+          width={2501}
+          height={400}
           priority
-          className="animate-fade-in-up relative z-10 h-auto w-[clamp(9rem,20vw,22rem)] shrink-0 max-[900px]:w-[clamp(10rem,60vw,18rem)]"
+          className="animate-fade-in-up relative z-10 h-auto w-[clamp(216px,39vw,500px)] shrink-0"
           style={delay(0.1)}
         />
-        {/* ponytail: макет — только desktop, мобильного варианта росчерков нет; на узких экранах линия не читается между блоками, прячем её */}
+        {/* FIXME Вынести в отдельный компонент varvara-line (уже создал папку, тебе нужно создать файл и вынести, не забудь прокинут пропсы через ComponentProps<'svg'>) и использовать ..rest */}
         <svg
-          className="aspect-[1097/126] h-auto min-w-0 flex-1 max-[900px]:hidden"
+          className="aspect-1097/126 h-auto min-w-0 flex-1 max-[900px]:hidden"
           viewBox="0 0 1097 126"
           fill="none"
           preserveAspectRatio="xMinYMax meet"
@@ -59,30 +61,33 @@ export function HeroSection({
         <Typography
           variant="overline"
           as="p"
-          className="uppercase tracking-[0.08em] text-[var(--color-gray-700)]"
+          className="uppercase tracking-[0.08em] text-gray-700"
         >
           приглашение на свадьбу
         </Typography>
+        {/* intrinsic 1501x896, capH≈240/строка → ширина = intrinsicW*80/240, единый кегль имён hero */}
+        {/* FIXME мне не нравятся конкретные числа width и height, как мы будем с ними адатировать под мобилки все эти картинки?*/}
         <Image
           src="/hero/couple.webp"
           alt="Артём & Варвара"
-          width={420}
-          height={220}
+          width={1501}
+          height={896}
           priority
-          className="h-auto w-[clamp(14rem,24vw,26rem)] max-[900px]:w-[clamp(11rem,60vw,18rem)]"
+          className="h-auto w-[clamp(216px,39vw,500px)]"
         />
         <Typography
           variant="subtitle-1"
           as="p"
-          className="text-[var(--color-gray-700)]"
+          className="text-gray-700"
         >
           28/08/2026
         </Typography>
       </div>
 
+      {/* FIXME Вынести в отдельный компонент artem-line (уже создал папку, тебе нужно создать файл и вынести, не забудь прокинут пропсы через ComponentProps<'svg'>) и использовать ..rest */}
       <div className="flex items-center justify-end max-[900px]:justify-center">
         <svg
-          className="aspect-[1264/136] h-auto min-w-0 flex-1 max-[900px]:hidden"
+          className="aspect-1264/136 h-auto min-w-0 flex-1 max-[900px]:hidden"
           viewBox="0 0 1264 136"
           fill="none"
           preserveAspectRatio="xMaxYMax meet"
@@ -98,16 +103,18 @@ export function HeroSection({
             pathLength="1"
           />
         </svg>
+        {/* intrinsic 1832x400, capH=400 → ширина = intrinsicW*80/400, единый кегль имён hero */}
+        {/* FIXME мне не нравятся конкретные числа width и height, как мы будем с ними адатировать под мобилки все эти картинки?*/}
         <Image
           src="/hero/artem.webp"
           alt="Артём"
-          width={420}
-          height={140}
+          width={1832}
+          height={400}
           priority
-          className="animate-fade-in-up relative z-10 h-auto w-[clamp(9rem,20vw,22rem)] shrink-0 max-[900px]:w-[clamp(10rem,60vw,18rem)]"
+          className="animate-fade-in-up relative z-10 h-auto w-[clamp(159px,29vw,366px)] shrink-0"
           style={delay(1.9)}
         />
       </div>
-    </section>
+    </AnimatedSection>
   );
 }

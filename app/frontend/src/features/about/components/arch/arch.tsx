@@ -1,11 +1,11 @@
-import type { CSSProperties, ReactNode } from "react";
+import type { ReactNode } from "react";
+import type { DelayStyle } from "@/shared/lib/section-animation";
 import styles from "./arch.module.css";
 
-/** Стиль с CSS-переменной `--delay`, которую читает `.animate-*` из styles/animations.css. */
-type DelayStyle = CSSProperties & { "--delay"?: string };
-
-const delay = (value: string): DelayStyle =>
-  ({ "--delay": value }) as DelayStyle;
+// Локальный delay: тут задержки — строки ("0.15s"), а не секунды (интра-компонентный
+// стаггер путей арки), поэтому переиспользовать shared/lib/section-animation's delay() нельзя,
+// но тип стиля общий.
+const delay = (value: string): DelayStyle => ({ "--delay": value });
 
 /**
  * Декоративная арка с кольцами, гирляндами оливковых листьев и монограммой "A & B".
@@ -17,6 +17,7 @@ const delay = (value: string): DelayStyle =>
  * (оба класса — из общего `styles/animations.css`), а затем оживают бесконечными
  * ambient-анимациями на чистом CSS (без JS, см. arch.module.css).
  */
+// FIXME Дополни ComponentProps<"svg"> + прокинь ...rest и базовые настройки
 export function Arch() {
   return (
     <svg

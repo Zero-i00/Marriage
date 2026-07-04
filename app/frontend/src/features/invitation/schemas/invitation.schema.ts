@@ -24,5 +24,5 @@ export const SchemaInvitationResponse = v.object({
   drinks: v.array(SchemaDrinkResponse),
 
   created_at: v.string(),
-  update_at: v.string(),
+  updated_at: v.string(),
 });

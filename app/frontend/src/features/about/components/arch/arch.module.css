@@ -1,5 +1,8 @@
 /* Ambient-анимация арки: кольца парят, гирлянды покачиваются, монограмма едва дрейфует. */
 
+/* FIXME ИСПОЛЬЗУЕМ ТОЛЬКО SNAKE-CASE ПРИ НАЗВАНИИ КЛАССОВ  */
+
+
 .ringGroup {
   transform-box: fill-box;
   transform-origin: center;
