@@ -23,7 +23,7 @@ export async function InvitationSection({
     <AnimatedSection
       id={id}
       className={twMerge(
-        "container-section relative flex flex-col gap-10 overflow-hidden bg-(--color-natural-100)",
+        "container-section relative flex flex-col gap-10 overflow-hidden bg-natural-100",
         className,
       )}
       {...rest}
@@ -46,7 +46,7 @@ export async function InvitationSection({
         />
       </svg>
 
-      <div className="flex justify-center md:justify-end">
+      <div className="flex justify-end">
         <Typography variant="h2" as="h2" className="sr-only">
           Анкета гостя
         </Typography>

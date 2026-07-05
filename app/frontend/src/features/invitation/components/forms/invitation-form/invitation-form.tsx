@@ -105,10 +105,7 @@ export function InvitationForm({ method = "POST", className, ...rest }: Props) {
         name="is_plan_visit"
         render={({ field }) => (
           <div className="flex flex-col gap-3">
-            <Typography
-              variant="subtitle-1"
-              className="text-(--color-primary-900)"
-            >
+            <Typography variant="subtitle-1" className="text-primary-900">
               Планируете ли Вы присутствовать на свадьбе?
             </Typography>
             <Radio
@@ -126,7 +123,7 @@ export function InvitationForm({ method = "POST", className, ...rest }: Props) {
       />
 
       <div className="flex flex-col gap-3">
-        <Typography variant="subtitle-1" className="text-(--color-primary-900)">
+        <Typography variant="subtitle-1" className="text-primary-900">
           Будет ли с Вами ещё кто-то?
         </Typography>
 
@@ -135,8 +132,8 @@ export function InvitationForm({ method = "POST", className, ...rest }: Props) {
           className="flex w-fit items-center gap-3 text-left"
           onClick={() => append({ full_name: "" })}
         >
-          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-(--rounded-sm) border-2 border-[var(--color-primary-400)]">
-            <Plus size={ICON_SIZE.xs} className="text-(--color-primary-700)" />
+          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-sm border-2 border-primary-400">
+            <Plus size={ICON_SIZE.xs} className="text-primary-700" />
           </span>
           <Typography variant="body-2">
             Да (вторая половинка / ребёнок)
@@ -180,10 +177,7 @@ export function InvitationForm({ method = "POST", className, ...rest }: Props) {
           name="drink_ids"
           render={({ field }) => (
             <div className="flex flex-col gap-3">
-              <Typography
-                variant="subtitle-1"
-                className="text-(--color-primary-900)"
-              >
+              <Typography variant="subtitle-1" className="text-primary-900">
                 Уточните Ваши предпочтения в алкоголе:
               </Typography>
               <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
