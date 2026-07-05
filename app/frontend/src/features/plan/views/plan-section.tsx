@@ -52,10 +52,7 @@ export function PlanSection({
   return (
     <AnimatedSection
       id={id}
-      className={twMerge(
-        "container-section flex flex-col gap-10 bg-natural-100",
-        className,
-      )}
+      className={twMerge("container-section flex flex-col gap-10", className)}
       {...rest}
     >
       <div className="animate-fade-in-up flex justify-end" style={delay(0)}>
@@ -82,7 +79,7 @@ export function PlanSection({
                 src={item.src}
                 alt={item.alt}
                 intrinsic={item.intrinsic}
-                width="clamp(240px,45vw,460px)"
+                width="clamp(280px,45vw,460px)"
               />
             </li>
           ))}
@@ -98,7 +95,7 @@ export function PlanSection({
                 src={item.src}
                 alt={item.alt}
                 intrinsic={item.intrinsic}
-                width="clamp(240px,45vw,460px)"
+                width="clamp(280px,45vw,460px)"
               />
             </li>
           ))}
