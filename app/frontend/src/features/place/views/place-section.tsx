@@ -7,9 +7,10 @@ import { ROOT_SECTION } from "@/shared/configs/section.config";
 import { HALL_ADDRESS, HALL_NAME } from "@/shared/constants/seo.constant";
 import { delay } from "@/shared/lib/section-animation";
 
-const YANDEX_MAPS_URL = `https://yandex.ru/maps/?rtext=~${encodeURIComponent(
-  HALL_ADDRESS,
-)}&rtt=auto`;
+// Прямая ссылка на карточку организации в Яндекс.Картах — надёжнее
+// текстового поиска, всегда открывает нужную площадку с пином и адресом.
+const YANDEX_MAPS_URL =
+  "https://yandex.ru/maps/org/yelka_ivent_kholl/185797492367/";
 
 export function PlaceSection({
   id = ROOT_SECTION.PLACE,
