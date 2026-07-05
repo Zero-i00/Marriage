@@ -1,0 +1,194 @@
+/**
+ * Контейнер компонента
+ */
+.container {
+  width: 100%;
+  display: inline-flex;
+  flex-direction: column;
+}
+
+/**
+ * Обёртка вокруг поля ввода
+ * Содержит иконки и textarea
+ */
+.textarea__wrapper {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: row;
+  border-radius: var(--rounded-sm);
+  transition: border-color 0.2s ease;
+  border: 1px solid var(--color-gray-opacity-main);
+
+  > textarea {
+    color: var(--color-gray-800);
+  }
+}
+
+/**
+ * Базовые стили для поля ввода
+ */
+.textarea {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  resize: vertical;
+  min-height: 96px;
+  font-family: inherit;
+  line-height: 1.5;
+  transition: border-color 0.2s ease;
+
+  /* Стандартный placeholder */
+  &::placeholder {
+    color: var(--color-gray-opacity-main);
+  }
+
+  /* Убираем стандартные браузерные стили валидации */
+  &:required,
+  &:invalid {
+    box-shadow: none;
+  }
+}
+
+/**
+ * Модификаторы размеров обёртки
+ */
+
+/* Размер xs */
+.textarea__wrapper--xs {
+  padding: 2px 8px;
+  gap: 4px;
+}
+
+.textarea__wrapper--xs .textarea {
+  padding: 6px 0;
+  font-size: var(--font-size-caption);
+}
+
+/* Размер tn */
+.textarea__wrapper--tn {
+  padding: 2px 9px;
+  gap: 5px;
+}
+
+.textarea__wrapper--tn .textarea {
+  padding: 7px 0;
+  font-size: var(--font-size-body-2);
+}
+
+/* Размер sm */
+.textarea__wrapper--sm {
+  padding: 2px 10px;
+  gap: 6px;
+}
+
+.textarea__wrapper--sm .textarea {
+  padding: 8px 0;
+  font-size: var(--font-size-body-1);
+}
+
+/* Размер md (по умолчанию) */
+.textarea__wrapper--md {
+  padding: 0 16px;
+  gap: 8px;
+}
+
+.textarea__wrapper--md .textarea {
+  padding: 12px 0;
+  font-size: var(--font-size-body-1);
+}
+
+/* Размер lg */
+.textarea__wrapper--lg {
+  padding: 0 18px;
+  gap: 10px;
+}
+
+.textarea__wrapper--lg .textarea {
+  padding: 16px 0;
+  font-size: var(--font-size-subtitle-1);
+}
+
+/* Размер xl */
+.textarea__wrapper--xl {
+  padding: 0 20px;
+  gap: 12px;
+}
+
+.textarea__wrapper--xl .textarea {
+  padding: 20px 0;
+  font-size: var(--font-size-h6);
+}
+
+/* Состояние фокуса */
+.textarea__wrapper:focus-within {
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 3px var(--color-primary-opacity-dark);
+}
+
+/**
+ * Модификаторы состояний обёртки
+ */
+
+/* Состояние ошибки - красная рамка */
+.textarea__wrapper--error {
+  border-color: var(--color-error-500);
+}
+
+/* При фокусе на ошибочном поле - рамка остаётся красной */
+.textarea__wrapper--error:focus-within {
+  border-color: var(--color-error-500);
+  box-shadow: 0 0 0 4px var(--color-error-opacity-lighter, rgba(0, 0, 0, 0.04));
+}
+
+/* Состояние успеха - зелёная рамка */
+.textarea__wrapper--success {
+  border-color: var(--color-success-500);
+  box-shadow: 0 0 0 4px
+    var(--color-success-opacity-lighter, rgba(0, 0, 0, 0.04));
+}
+
+/* При фокусе на успешном поле - рамка остаётся зелёной */
+.textarea__wrapper--success:focus-within {
+  border-color: var(--color-success-500);
+}
+
+/**
+ * Вспомогательные тексты под полем ввода
+ */
+
+/* Подпись (label) */
+.textarea__label {
+  margin: 4px;
+  color: var(--color-gray-900);
+  font-size: var(--font-size-subtitle-2);
+  font-weight: var(--font-weight-subtitle-2);
+  line-height: var(--line-height-subtitle-2);
+}
+
+/* Подсказка (hint) */
+.textarea__hint {
+  margin: 4px;
+  color: var(--color-primary-500);
+  font-size: var(--font-size-overline);
+  font-weight: var(--font-weight-overline);
+  line-height: var(--line-height-overline);
+}
+
+/* Сообщение об ошибке */
+.textarea__error {
+  margin: 4px;
+  color: var(--color-error-500);
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-caption);
+  line-height: var(--line-height-caption);
+}
+
+/* Сообщение об успешной валидации */
+.textarea__success {
+  margin: 4px;
+  color: var(--color-success-500);
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-caption);
+  line-height: var(--line-height-caption);
+}

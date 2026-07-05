@@ -6,7 +6,7 @@ import Cookies from "js-cookie";
 import { Plus, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 import type { ComponentProps } from "react";
-import { useTransition } from "react";
+import { useRef, useState, useTransition } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { twMerge } from "tailwind-merge";
@@ -20,6 +20,7 @@ import { Button } from "@/shared/components/ui/button";
 import { Checkbox } from "@/shared/components/ui/checkbox";
 import { Input } from "@/shared/components/ui/input";
 import { Radio } from "@/shared/components/ui/radio";
+import { Textarea } from "@/shared/components/ui/textarea";
 import { Typography } from "@/shared/components/ui/typography";
 import { COOKIE_INVITATION_PASSED } from "@/shared/constants/cookie.constant";
 import { INVALID_REQUIRED } from "@/shared/constants/error.constant";
@@ -30,14 +31,20 @@ type FormData = TypeInvitationRequest;
 const DEFAULT_VALUES: FormData = {
   is_plan_visit: true,
   music: "",
+  comment: "",
   drink_ids: [],
   guests: [{ full_name: "" }],
 };
+
+/** Длительность плавного исчезновения секции после отправки (мс). */
+const EXIT_DURATION_MS = 600;
 
 interface Props extends ComponentProps<"form"> {}
 
 export function InvitationForm({ method = "POST", className, ...rest }: Props) {
   const router = useRouter();
+  const formRef = useRef<HTMLFormElement>(null);
+  const [isExiting, setIsExiting] = useState(false);
   const [isMounting, startTransition] = useTransition();
 
   const { data: drinks = [] } = useQuery({
@@ -59,15 +66,24 @@ export function InvitationForm({ method = "POST", className, ...rest }: Props) {
   const mutation = useMutation({
     mutationFn: (data: FormData) => invitationService.create(data),
     onSuccess: () => {
-      startTransition(() => {
-        reset(DEFAULT_VALUES);
-        Cookies.set(COOKIE_INVITATION_PASSED, "true", {
-          expires: 365,
-          sameSite: "lax",
-        });
-        toast.success("Анкета отправлена!");
-        router.refresh();
+      toast.success("Анкета отправлена!");
+      Cookies.set(COOKIE_INVITATION_PASSED, "true", {
+        expires: 365,
+        sameSite: "lax",
       });
+
+      // Плавно гасим секцию (CSS-анимация .animate-fade-out) перед тем,
+      // как server-refresh уберёт её из DOM. JS лишь навешивает класс —
+      // ровно как AnimatedSection навешивает `.in-view`.
+      setIsExiting(true);
+      formRef.current?.closest("section")?.classList.add("animate-fade-out");
+
+      window.setTimeout(() => {
+        startTransition(() => {
+          reset(DEFAULT_VALUES);
+          router.refresh();
+        });
+      }, EXIT_DURATION_MS);
     },
     onError: async (error) => {
       const messages = await extractError(error);
@@ -76,10 +92,11 @@ export function InvitationForm({ method = "POST", className, ...rest }: Props) {
   });
 
   const submit = (data: FormData) => mutation.mutate(data);
-  const isLoading = isMounting || mutation.isPending;
+  const isLoading = isMounting || mutation.isPending || isExiting;
 
   return (
     <form
+      ref={formRef}
       method={method}
       onSubmit={handleSubmit(submit)}
       className={twMerge("flex w-full max-w-md flex-col gap-8", className)}
@@ -213,6 +230,13 @@ export function InvitationForm({ method = "POST", className, ...rest }: Props) {
         label="Оставьте свой любимый музыкальный трек для дискотеки"
         placeholder="Bruno Mars - Just The Way You Are"
         {...register("music")}
+      />
+
+      <Textarea
+        label="Комментарий"
+        placeholder="Ваши пожелания и комментарии…"
+        rows={4}
+        {...register("comment")}
       />
 
       <Button

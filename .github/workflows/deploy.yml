@@ -20,6 +20,7 @@ jobs:
       POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
       BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
       TG_BOT_SUPER_USER_ID_LIST: ${{ secrets.TG_BOT_SUPER_USER_ID_LIST }}
+      WEB_APP_URL: ${{ secrets.WEB_APP_URL }}
       VLESS_HOST: ${{ secrets.VLESS_HOST }}
       VLESS_UUID: ${{ secrets.VLESS_UUID }}
       REALITY_SNI: ${{ secrets.REALITY_SNI }}
