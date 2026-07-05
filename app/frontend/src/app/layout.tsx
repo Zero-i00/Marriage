@@ -25,6 +25,11 @@ export const metadata: Metadata = {
   },
   description: SEO_DESCRIPTION,
   robots: { index: false, follow: false },
+  icons: {
+    icon: "/favicon.webp",
+    shortcut: "/favicon.webp",
+    apple: "/favicon.webp",
+  },
   openGraph: {
     title: SITE_NAME,
     description: SEO_DESCRIPTION,
