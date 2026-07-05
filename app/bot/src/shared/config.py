@@ -23,6 +23,7 @@ class Settings(BaseSettings):
     bot_token: SecretStr
     bot_proxy_url: SecretStr
     tg_bot_super_user_id_list: list[int] = Field(default_factory=list)
+    web_app_url: str
 
     server: ServerSettings = Field(default_factory=ServerSettings)
 

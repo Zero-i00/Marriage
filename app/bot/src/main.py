@@ -7,7 +7,7 @@ from features import root_router
 from shared.api import make_query_client
 from shared.config import get_settings
 from shared.menu import set_super_user_menu
-from shared.middlewares import SuperUserOnlyMiddleware, UserContextMiddleware
+from shared.middlewares import UserContextMiddleware
 
 settings = get_settings()
 
@@ -24,9 +24,6 @@ def init_bot() -> Bot:
 
 def init_dispatcher() -> Dispatcher:
     dp = Dispatcher()
-
-    dp.message.outer_middleware(SuperUserOnlyMiddleware(settings.tg_bot_super_user_id_list))
-    dp.callback_query.outer_middleware(SuperUserOnlyMiddleware(settings.tg_bot_super_user_id_list))
 
     dp.update.middleware(UserContextMiddleware())
 
