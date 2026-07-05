@@ -200,7 +200,7 @@ body {
   margin: 0;
   min-width: 320px;
   overflow-x: hidden;
-  background: var(--color-white);
+  background: var(--color-natural-100);
   font-family: var(--font-montserrat), sans-serif;
 }
 

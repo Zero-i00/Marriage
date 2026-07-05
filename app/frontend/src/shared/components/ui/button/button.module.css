@@ -29,7 +29,7 @@
 }
 
 /* События */
-.btn[aria-disabled="true"] {
+.btn:disabled {
   opacity: 0.45;
   cursor: default;
 }

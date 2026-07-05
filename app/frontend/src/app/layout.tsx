@@ -6,13 +6,12 @@ import { Providers } from "@/app/providers";
 import { Footer } from "@/shared/components/layout/footer";
 import {
   SEO_DESCRIPTION,
-  SEO_KEYWORDS,
   SEO_URL,
   SITE_NAME,
 } from "@/shared/constants/seo.constant";
 
 const montserrat = Montserrat({
-  weight: "300",
+  weight: ["300", "400", "500", "600"],
   variable: "--font-montserrat",
   subsets: ["latin", "cyrillic"],
   style: ["normal"],
@@ -25,7 +24,6 @@ export const metadata: Metadata = {
     template: `%s | ${SITE_NAME}`,
   },
   description: SEO_DESCRIPTION,
-  keywords: SEO_KEYWORDS,
   robots: { index: false, follow: false },
   openGraph: {
     title: SITE_NAME,
@@ -37,6 +35,9 @@ export const metadata: Metadata = {
     images: [
       { url: "/seo/preview.webp", width: 1200, height: 630, alt: SITE_NAME },
     ],
+  },
+  twitter: {
+    card: "summary_large_image",
   },
 };
 

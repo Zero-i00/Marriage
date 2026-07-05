@@ -109,11 +109,15 @@ export function InvitationForm({ method = "POST", className, ...rest }: Props) {
               Планируете ли Вы присутствовать на свадьбе?
             </Typography>
             <Radio
+              id="is_plan_visit-yes"
+              name="is_plan_visit"
               label="Да, с удовольствием"
               isChecked={field.value}
               onChange={() => field.onChange(true)}
             />
             <Radio
+              id="is_plan_visit-no"
+              name="is_plan_visit"
               label="К сожалению, не смогу"
               isChecked={!field.value}
               onChange={() => field.onChange(false)}
@@ -127,18 +131,16 @@ export function InvitationForm({ method = "POST", className, ...rest }: Props) {
           Будет ли с Вами ещё кто-то?
         </Typography>
 
-        <button
+        <Button
           type="button"
-          className="flex w-fit items-center gap-3 text-left"
+          variant="default"
+          size="sm"
+          className="w-fit gap-2"
           onClick={() => append({ full_name: "" })}
         >
-          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-sm border-2 border-primary-400">
-            <Plus size={ICON_SIZE.xs} className="text-primary-700" />
-          </span>
-          <Typography variant="body-2">
-            Да (вторая половинка / ребёнок)
-          </Typography>
-        </button>
+          <Plus size={ICON_SIZE.xs} />
+          Добавить гостя (вторая половинка / ребёнок)
+        </Button>
 
         {fields.slice(1).map((field, index) => (
           <div key={field.id} className="flex items-start gap-2">
@@ -159,6 +161,7 @@ export function InvitationForm({ method = "POST", className, ...rest }: Props) {
             <Button
               type="button"
               variant="icon"
+              size="lg"
               aria-label="Удалить гостя"
               className="mt-auto"
               onClick={() => remove(index + 1)}
@@ -167,8 +170,6 @@ export function InvitationForm({ method = "POST", className, ...rest }: Props) {
             </Button>
           </div>
         ))}
-
-        <Checkbox label="Нет" isChecked={fields.length === 1} />
       </div>
 
       {drinks.length > 0 && (

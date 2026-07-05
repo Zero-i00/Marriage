@@ -121,11 +121,10 @@
   font-size: var(--font-size-h6);
 }
 
-/* Состояние фокуса - синяя рамка */
+/* Состояние фокуса */
 .input__wrapper:focus-within {
   border-color: var(--color-primary-500);
-  box-shadow: 0 0 0 4px
-    var(--color-primary-opacity-lighter, rgba(0, 0, 0, 0.04));
+  box-shadow: 0 0 0 3px var(--color-primary-opacity-dark);
 }
 
 /**

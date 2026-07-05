@@ -39,14 +39,20 @@ export function AboutSection({
           </div>
 
           <div
-            className="flex max-w-prose flex-col items-center gap-6 text-center animate-fade-in-up lg:items-end lg:text-right"
+            className="flex max-w-prose lg:max-w-1/2 md:self-start flex-col items-center gap-6 text-center animate-fade-in-up lg:items-end lg:text-right"
             style={delay(0.2)}
           >
-            <Typography variant="subtitle-1" className="text-primary-900">
+            <Typography
+              variant="subtitle-1"
+              className="lg:text-start text-primary-900"
+            >
               Один день в этом году будет для нас особенным, и мы хотим провести
               его в кругу близких и друзей.
             </Typography>
-            <Typography variant="subtitle-1" className="text-primary-900">
+            <Typography
+              variant="subtitle-1"
+              className="lg:text-start text-primary-900"
+            >
               С огромной радостью приглашаем Вас на главное событие в нашей
               жизни - нашу свадьбу!
             </Typography>
