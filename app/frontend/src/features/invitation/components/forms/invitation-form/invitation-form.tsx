@@ -131,16 +131,18 @@ export function InvitationForm({ method = "POST", className, ...rest }: Props) {
           Будет ли с Вами ещё кто-то?
         </Typography>
 
-        <Button
+        <button
           type="button"
-          variant="default"
-          size="sm"
-          className="w-fit gap-2"
+          className="flex w-fit items-center gap-3 text-left"
           onClick={() => append({ full_name: "" })}
         >
-          <Plus size={ICON_SIZE.xs} />
-          Добавить гостя (вторая половинка / ребёнок)
-        </Button>
+          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-sm border-2 border-primary-400">
+            <Plus size={ICON_SIZE.xs} className="text-primary-700" />
+          </span>
+          <Typography variant="body-2">
+            Да (вторая половинка / ребёнок)
+          </Typography>
+        </button>
 
         {fields.slice(1).map((field, index) => (
           <div key={field.id} className="flex items-start gap-2">
@@ -170,6 +172,8 @@ export function InvitationForm({ method = "POST", className, ...rest }: Props) {
             </Button>
           </div>
         ))}
+
+        <Checkbox label="Нет" isChecked={fields.length === 1} />
       </div>
 
       {drinks.length > 0 && (
