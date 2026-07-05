@@ -5,7 +5,7 @@ import type {
 import { rootClient } from "@/shared/api/interceptors/root.interceptor";
 
 class InvitationService {
-  private readonly BASE_URL = "/invitation";
+  private readonly BASE_URL = "invitation";
 
   async create(data: TypeInvitationRequest) {
     const response = await rootClient.post<TypeInvitationResponse>(
