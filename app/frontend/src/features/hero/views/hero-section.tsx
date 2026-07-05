@@ -11,7 +11,7 @@ import { delay } from "@/shared/lib/section-animation";
 function CenterBlock() {
   return (
     <div
-      className="animate-fade-in-up flex flex-col items-center gap-6 text-center"
+      className="animate-fade-in-up flex flex-col items-center gap-8 text-center"
       style={delay(0.9)}
     >
       <Typography
