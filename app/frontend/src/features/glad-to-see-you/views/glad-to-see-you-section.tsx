@@ -2,6 +2,7 @@ import type { ComponentProps } from "react";
 import { twMerge } from "tailwind-merge";
 import { TitleImage } from "@/shared/components/elements/title-image";
 import { AnimatedSection } from "@/shared/components/layout/animated-section";
+import { Typography } from "@/shared/components/ui/typography";
 import { ROOT_SECTION } from "@/shared/configs/section.config";
 import { delay } from "@/shared/lib/section-animation";
 
@@ -14,13 +15,13 @@ export function GladToSeeYouSection({
     <AnimatedSection
       id={id}
       className={twMerge(
-        "container-section relative flex min-h-[40svh] flex-col items-center justify-center gap-8 overflow-hidden bg-(--color-natural-100) md:min-h-[60svh] md:flex-row md:justify-end md:gap-0",
+        "container-section relative flex min-h-[40svh] flex-col justify-center gap-8 overflow-hidden md:min-h-[60svh] md:flex-row md:items-end md:justify-between md:gap-8",
         className,
       )}
       {...rest}
     >
       <svg
-        className="h-auto w-[85%] md:absolute md:bottom-[8%] md:left-0 md:w-[55%]"
+        className="order-2 h-auto w-[85%] md:order-1 md:w-[55%]"
         viewBox="0 0 1043 223"
         fill="none"
         preserveAspectRatio="xMidYMax meet"
@@ -36,14 +37,21 @@ export function GladToSeeYouSection({
         />
       </svg>
 
-      <TitleImage
-        src="/glad-to-see-you/title.webp"
-        alt="Мы будем рады видеть вас!"
-        intrinsic={[2716, 1280]}
-        width="clamp(285px,51vw,659px)"
-        className="animate-fade-in-up relative z-10"
+      <div
+        className="animate-fade-in-up order-1 flex w-full justify-end md:order-2 md:w-auto"
         style={delay(0.4)}
-      />
+      >
+        <Typography variant="h2" as="h2" className="sr-only">
+          Мы будем рады видеть вас!
+        </Typography>
+        <TitleImage
+          src="/glad-to-see-you/title.webp"
+          alt="Мы будем рады видеть вас!"
+          intrinsic={[2716, 1280]}
+          width="clamp(285px,51vw,659px)"
+          className="relative z-10"
+        />
+      </div>
     </AnimatedSection>
   );
 }
