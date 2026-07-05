@@ -1,7 +1,7 @@
 import type { ComponentProps } from "react";
 import { twMerge } from "tailwind-merge";
-import { AnimatedSection } from "@/shared/components/layout/animated-section";
 import { TitleImage } from "@/shared/components/elements/title-image";
+import { AnimatedSection } from "@/shared/components/layout/animated-section";
 import { Typography } from "@/shared/components/ui/typography";
 import { ROOT_SECTION } from "@/shared/configs/section.config";
 import { delay } from "@/shared/lib/section-animation";

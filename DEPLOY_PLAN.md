@@ -97,7 +97,7 @@ backend ──> db(postgres:16)
 
 ### 3. Caddy
 
-- **CREATE `Caddyfile`** (корень):
+- **CREATE `Caddyfile`** (корень) (но лучше в коне в папку /caddy/Caddyfile):
   ```
   marriage.soft-stack.ru {
     encode zstd gzip
@@ -116,9 +116,17 @@ backend ──> db(postgres:16)
 
 - **CREATE `app/backend/.env.prod.example`**: `APP_DEBUG=False`, `APP_HOST=0.0.0.0`, `APP_PORT=8000`,
   `APP_VERSION=...`, `APP_CORS_ORIGIN=["https://marriage.soft-stack.ru"]`, `POSTGRES_HOST=db`,
-  `POSTGRES_PORT=5432`, пустые `POSTGRES_DB=`, `POSTGRES_USER=`, `POSTGRES_PASSWORD=`, `TG_BOT_SUPER_USER_ID=`.
+  `POSTGRES_PORT=5432`, пустые `POSTGRES_DB=`, `POSTGRES_USER=`, `POSTGRES_PASSWORD=`, `TG_BOT_SUPER_USER_ID_LIST=`.
 - **CREATE `app/bot/.env.prod.example`**: пустой `BOT_TOKEN=`, `BOT_PROXY_URL=socks5://proxy:1080`,
-  пустой `BOT_SUPER_USER_ID=`, `SERVER_URL=http://backend:8000`.
+  пустой `TG_BOT_SUPER_USER_ID_LIST=`, `SERVER_URL=http://backend:8000`.
+
+> **`TG_BOT_SUPER_USER_ID_LIST` (список admin-id)** — теперь **одна** переменная и в backend, и в bot
+> (заменила старые `TG_BOT_SUPER_USER_ID` / `BOT_SUPER_USER_ID`). Значение — JSON-список
+> (`["1529841680","999"]`). В обоих `.env.prod.example` ключ **пустой** → CI подставит из одного
+> GH Secret. Backend парсит как `list[str]`, bot как `list[int]` (pydantic коэрсит) — один и тот же
+> JSON годится обоим. Кавычки в готовом `.env` держать как в текущих `.env` каждого приложения
+> (backend: `'[...]'`, bot: `[...]`) — render-скрипт значение не трогает, поэтому GH Secret должен
+> содержать ровно ту строку, что нужна env_file (без внешних кавычек для docker `env_file`).
 - **CREATE `app/frontend/.env.prod.example`**: `NEXT_PUBLIC_PORT=3000`,
   `NEXT_PUBLIC_HOST=marriage.soft-stack.ru`, `NEXT_PUBLIC_SERVER_URL=https://marriage.soft-stack.ru`
   (публичное, не секрет).
@@ -128,7 +136,7 @@ backend ──> db(postgres:16)
 ### 5. Скрипт рендера env
 
 - **CREATE `scripts/render-env.sh`** — заполняет только пустые `KEY=` из окружения (indirect
-  expansion), остальное (значения, комментарии) пропускает без изменений:
+  expansion), остальное (значения, комментарии) пропускает без изменений: (пусть будет в корне проекта отдельная папка deployment, куда будет складывать подобные скрипты. ВОобще можно посмотреть Документы/Projects/dev-partner-group, там отлично работает система подстановки переменных)
   ```bash
   #!/usr/bin/env bash
   # render-env.sh <template> <out>  — пустой KEY= берётся из $KEY окружения
@@ -167,8 +175,9 @@ backend ──> db(postgres:16)
 
 **Secrets** (Settings → Secrets → Actions, желательно в environment `production`):
 - SSH: `SSH_HOST`, `SSH_USER`, `SSH_PORT`, `SSH_PRIVATE_KEY`.
-- Backend: `POSTGRES_DB`, `POSTGRES_USER`, `POSTGRES_PASSWORD`, `TG_BOT_SUPER_USER_ID`.
-- Bot: `BOT_TOKEN`, `BOT_SUPER_USER_ID`.
+- Backend: `POSTGRES_DB`, `POSTGRES_USER`, `POSTGRES_PASSWORD`.
+- Bot: `BOT_TOKEN`.
+- Общий (backend + bot): `TG_BOT_SUPER_USER_ID_LIST` — JSON-список admin-id, один Secret на оба приложения.
 - VLESS/sing-box: `VLESS_HOST`, `VLESS_UUID`, `REALITY_SNI`, `REALITY_PUBLIC_KEY`, `REALITY_SHORT_ID`.
 
 **Variables**: не требуются — все несекретные прод-значения зашиты в `.env.prod.example`.

@@ -136,10 +136,7 @@ export function InvitationForm({ method = "POST", className, ...rest }: Props) {
           onClick={() => append({ full_name: "" })}
         >
           <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-(--rounded-sm) border-2 border-[var(--color-primary-400)]">
-            <Plus
-              size={ICON_SIZE.xs}
-              className="text-(--color-primary-700)"
-            />
+            <Plus size={ICON_SIZE.xs} className="text-(--color-primary-700)" />
           </span>
           <Typography variant="body-2">
             Да (вторая половинка / ребёнок)

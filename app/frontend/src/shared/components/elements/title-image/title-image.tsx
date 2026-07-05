@@ -5,7 +5,6 @@ import { twMerge } from "tailwind-merge";
 interface Props extends Omit<ComponentProps<typeof Image>, "width" | "height"> {
   width: string;
   intrinsic: readonly [number, number];
-
 }
 
 /**

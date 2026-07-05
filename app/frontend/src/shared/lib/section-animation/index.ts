@@ -1,1 +1,1 @@
-export { delay, type DelayStyle } from "./section-animation";
+export { type DelayStyle, delay } from "./section-animation";

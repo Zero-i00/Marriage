@@ -1,7 +1,7 @@
 import type { ComponentProps } from "react";
 import { twMerge } from "tailwind-merge";
-import { AnimatedSection } from "@/shared/components/layout/animated-section";
 import { TitleImage } from "@/shared/components/elements/title-image";
+import { AnimatedSection } from "@/shared/components/layout/animated-section";
 import { Typography } from "@/shared/components/ui/typography";
 import { ROOT_SECTION } from "@/shared/configs/section.config";
 import { HALL_ADDRESS, HALL_NAME } from "@/shared/constants/seo.constant";
@@ -29,7 +29,7 @@ export function PlaceSection({
       <Typography
         variant="body-1"
         as="address"
-        className="animate-fade-in-up flex flex-col gap-4 not-italic md:order-1 md:pt-2"
+        className="animate-fade-in-up order-2 flex flex-col gap-4 not-italic md:order-1 md:pt-2"
         style={delay(0.1)}
       >
         <Typography variant="overline" className="text-gray-600">
@@ -52,7 +52,7 @@ export function PlaceSection({
       </Typography>
 
       <div
-        className="animate-fade-in-up flex justify-center md:order-2 md:justify-end"
+        className="animate-fade-in-up order-1 flex justify-center md:order-2 md:justify-end"
         style={delay(0.3)}
       >
         <Typography variant="h2" as="h2" className="sr-only">

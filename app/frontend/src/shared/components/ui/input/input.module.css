@@ -2,9 +2,9 @@
  * Контейнер компонента
  */
 .container {
-    width: 100%;
-    display: inline-flex;
-    flex-direction: column;
+  width: 100%;
+  display: inline-flex;
+  flex-direction: column;
 }
 
 /**
@@ -12,16 +12,16 @@
  * Содержит иконки и input
  */
 .input__wrapper {
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    border-radius: var(--rounded-sm);
-    transition: border-color 0.2s ease;
-    border: 1px solid var(--color-gray-opacity-main);
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  border-radius: var(--rounded-sm);
+  transition: border-color 0.2s ease;
+  border: 1px solid var(--color-gray-opacity-main);
 
-    > input {
-        color: var(--color-gray-800);
-    }
+  > input {
+    color: var(--color-gray-800);
+  }
 }
 
 /**
@@ -30,74 +30,74 @@
 
 /* Размер xs */
 .input__wrapper--xs {
-    padding: 2px 8px;
-    gap: 4px;
+  padding: 2px 8px;
+  gap: 4px;
 }
 
 .input__wrapper--xs .input {
-    padding: 6px 0;
-    font-size: var(--font-size-caption);
+  padding: 6px 0;
+  font-size: var(--font-size-caption);
 }
 
 /* Размер tn */
 .input__wrapper--tn {
-    padding: 2px 9px;
-    gap: 5px;
+  padding: 2px 9px;
+  gap: 5px;
 }
 
 .input__wrapper--tn .input {
-    padding: 7px 0;
-    font-size: var(--font-size-body-2);
+  padding: 7px 0;
+  font-size: var(--font-size-body-2);
 }
 
 /* Размер sm */
 .input__wrapper--sm {
-    padding: 2px 10px;
-    gap: 6px;
+  padding: 2px 10px;
+  gap: 6px;
 }
 
 .input__wrapper--sm .input {
-    padding: 8px 0;
-    font-size: var(--font-size-body-1);
+  padding: 8px 0;
+  font-size: var(--font-size-body-1);
 }
 
 /* Размер md (по умолчанию) */
 .input__wrapper--md {
-    padding: 0 16px;
-    gap: 8px;
+  padding: 0 16px;
+  gap: 8px;
 }
 
 .input__wrapper--md .input {
-    padding: 12px 0;
-    font-size: var(--font-size-body-1);
+  padding: 12px 0;
+  font-size: var(--font-size-body-1);
 }
 
 /* Размер lg */
 .input__wrapper--lg {
-    padding: 0 18px;
-    gap: 10px;
+  padding: 0 18px;
+  gap: 10px;
 }
 
 .input__wrapper--lg .input {
-    padding: 16px 0;
-    font-size: var(--font-size-subtitle-1);
+  padding: 16px 0;
+  font-size: var(--font-size-subtitle-1);
 }
 
 /* Размер xl */
 .input__wrapper--xl {
-    padding: 0 20px;
-    gap: 12px;
+  padding: 0 20px;
+  gap: 12px;
 }
 
 .input__wrapper--xl .input {
-    padding: 20px 0;
-    font-size: var(--font-size-h6);
+  padding: 20px 0;
+  font-size: var(--font-size-h6);
 }
 
 /* Состояние фокуса - синяя рамка */
 .input__wrapper:focus-within {
-    border-color: var(--color-primary-500);
-    box-shadow: 0 0 0 4px
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 4px
     var(--color-primary-opacity-lighter, rgba(0, 0, 0, 0.04));
 }
 
@@ -107,52 +107,52 @@
 
 /* Состояние ошибки - красная рамка */
 .input__wrapper--error {
-    border-color: var(--color-error-500);
+  border-color: var(--color-error-500);
 }
 
 /* При фокусе на ошибочном поле - рамка остаётся красной */
 .input__wrapper--error:focus-within {
-    border-color: var(--color-error-500);
-    box-shadow: 0 0 0 4px var(--color-error-opacity-lighter, rgba(0, 0, 0, 0.04));
+  border-color: var(--color-error-500);
+  box-shadow: 0 0 0 4px var(--color-error-opacity-lighter, rgba(0, 0, 0, 0.04));
 }
 
 /* Состояние успеха - зелёная рамка */
 .input__wrapper--success {
-    border-color: var(--color-success-500);
-    box-shadow: 0 0 0 4px
+  border-color: var(--color-success-500);
+  box-shadow: 0 0 0 4px
     var(--color-success-opacity-lighter, rgba(0, 0, 0, 0.04));
 }
 
 /* При фокусе на успешном поле - рамка остаётся зелёной */
 .input__wrapper--success:focus-within {
-    border-color: var(--color-success-500);
+  border-color: var(--color-success-500);
 }
 
 /**
  * Базовые стили для поля ввода
  */
 .input {
-    width: 100%;
-    border: none;
-    outline: none;
-    background: transparent;
-    transition: border-color 0.2s ease;
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  transition: border-color 0.2s ease;
 
-    /* Стандартный placeholder */
-    &::placeholder {
-        color: var(--color-gray-opacity-main);
-    }
+  /* Стандартный placeholder */
+  &::placeholder {
+    color: var(--color-gray-opacity-main);
+  }
 
-    /* Убираем стандартные браузерные стили валидации */
-    &:required,
-    &:invalid {
-        box-shadow: none;
-    }
+  /* Убираем стандартные браузерные стили валидации */
+  &:required,
+  &:invalid {
+    box-shadow: none;
+  }
 
-    /* Убираем стандартный крестик у search input */
-    &::-webkit-search-cancel-button {
-        -webkit-appearance: none;
-    }
+  /* Убираем стандартный крестик у search input */
+  &::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+  }
 }
 
 /**
@@ -160,37 +160,37 @@
  */
 
 /* Подсказка (hint) */
-.input__label{
-    margin: 4px;
-    color: var(--color-gray-900);
-    font-size: var(--font-size-subtitle-2);
-    font-weight: var(--font-weight-subtitle-2);
-    line-height: var(--line-height-subtitle-2);
+.input__label {
+  margin: 4px;
+  color: var(--color-gray-900);
+  font-size: var(--font-size-subtitle-2);
+  font-weight: var(--font-weight-subtitle-2);
+  line-height: var(--line-height-subtitle-2);
 }
 
 /* Подсказка (hint) */
 .input__hint {
-    margin: 4px;
-    color: var(--color-primary-500);
-    font-size: var(--font-size-overline);
-    font-weight: var(--font-weight-overline);
-    line-height: var(--line-height-overline);
+  margin: 4px;
+  color: var(--color-primary-500);
+  font-size: var(--font-size-overline);
+  font-weight: var(--font-weight-overline);
+  line-height: var(--line-height-overline);
 }
 
 /* Сообщение об ошибке */
 .input__error {
-    margin: 4px;
-    color: var(--color-error-500);
-    font-size: var(--font-size-caption);
-    font-weight: var(--font-weight-caption);
-    line-height: var(--line-height-caption);
+  margin: 4px;
+  color: var(--color-error-500);
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-caption);
+  line-height: var(--line-height-caption);
 }
 
 /* Сообщение об успешной валидации */
 .input__success {
-    margin: 4px;
-    color: var(--color-success-500);
-    font-size: var(--font-size-caption);
-    font-weight: var(--font-weight-caption);
-    line-height: var(--line-height-caption);
+  margin: 4px;
+  color: var(--color-success-500);
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-caption);
+  line-height: var(--line-height-caption);
 }

@@ -7,7 +7,7 @@ export function VarvaraLine({ className, ...rest }: ComponentProps<"svg">) {
   return (
     <svg
       className={twMerge(
-        "aspect-1097/126 h-auto min-w-0 flex-1 max-[900px]:hidden",
+        "aspect-1097/126 h-auto w-20 shrink-0 min-[901px]:w-auto min-[901px]:min-w-0 min-[901px]:flex-1",
         className,
       )}
       viewBox="0 0 1097 126"

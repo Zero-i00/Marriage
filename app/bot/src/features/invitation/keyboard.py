@@ -33,7 +33,9 @@ class CallbackInvitationSkip(CallbackData, prefix="invitation:skip", sep="|"):
     pass
 
 
-def invitation_pagination_keyboard(page: int, total: int, invitation_id: int) -> InlineKeyboardMarkup:
+def invitation_pagination_keyboard(
+    page: int, total: int, invitation_id: int
+) -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
     nav_count = 1
     if page > 0:

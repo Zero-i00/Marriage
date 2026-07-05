@@ -26,9 +26,7 @@ def init_dispatcher() -> Dispatcher:
     dp = Dispatcher()
 
     dp.message.outer_middleware(SuperUserOnlyMiddleware(settings.tg_bot_super_user_id_list))
-    dp.callback_query.outer_middleware(
-        SuperUserOnlyMiddleware(settings.tg_bot_super_user_id_list)
-    )
+    dp.callback_query.outer_middleware(SuperUserOnlyMiddleware(settings.tg_bot_super_user_id_list))
 
     dp.update.middleware(UserContextMiddleware())
 
