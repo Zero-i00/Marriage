@@ -29,7 +29,8 @@ class DatabaseSettings(BaseSettings):
 
 
 class TelegramBotSettings(BaseSettings):
-    model_config = BaseConfig
+    # coerce_numbers_to_str: список id может прийти из env как JSON-массив чисел
+    model_config = {**BaseConfig, "coerce_numbers_to_str": True}
 
     tg_bot_super_user_id_list: list[str] = Field(default_factory=list)
 
