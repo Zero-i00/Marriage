@@ -6,6 +6,7 @@ from aiogram.types import CallbackQuery, Message
 from features.drink.service import drink_service
 from shared.routes import Route
 
+from ..guest.types import GuestRequest
 from .keyboard import (
     CallbackInvitationCreate,
     CallbackInvitationDestroy,
@@ -15,15 +16,14 @@ from .keyboard import (
     CallbackInvitationSkip,
     CallbackInvitationToggleDrink,
     drinks_select_keyboard,
-    invitation_pagination_keyboard,
     invitation_empty_keyboard,
+    invitation_pagination_keyboard,
     plan_visit_keyboard,
     skip_keyboard,
 )
 from .service import invitation_service
 from .state import FSMInvitationState
 from .types import InvitationRequest
-from ..guest.types import GuestRequest
 from .utils import format_invitation_card
 
 router = Router(name="invitation")

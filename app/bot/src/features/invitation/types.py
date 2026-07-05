@@ -3,7 +3,7 @@ from datetime import datetime
 from pydantic import BaseModel, Field
 
 from features.drink.types import DrinkResponse
-from features.guest.types import GuestResponse, GuestRequest
+from features.guest.types import GuestRequest, GuestResponse
 
 
 class InvitationRequest(BaseModel):

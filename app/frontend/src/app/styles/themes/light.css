@@ -1,0 +1,29 @@
+:root {
+  /* Natural (тёплая earthy-линейка, из фонов макета) */
+  --color-natural-100: #fbfaf5;
+  --color-natural-200: #f8f7f1;
+  --color-natural-300: #f4f3ec;
+  --color-natural-400: #e8e6da;
+  --color-natural-500: #d3cfba;
+  --color-natural-600: #b3ac8d;
+  --color-natural-700: #8f8564;
+  --color-natural-800: #665e47;
+  --color-natural-900: #3d3829;
+
+  /* Gray (тёплый серо-зелёный тинт под макет) */
+  --color-gray-100: #f1f2ee;
+  --color-gray-200: #e2e5df;
+  --color-gray-300: #cdd2c9;
+  --color-gray-400: #b0b7ac;
+  --color-gray-500: #929a8e;
+  --color-gray-600: #747c70;
+  --color-gray-700: #565e53;
+  --color-gray-800: #394034;
+  --color-gray-900: #1d382a;
+
+  --color-gray-opacity-lighter: #1d382a14;
+  --color-gray-opacity-light: #1d382a29;
+  --color-gray-opacity-main: #1d382a3d;
+  --color-gray-opacity-dark: #1d382a52;
+  --color-gray-opacity-darker: #1d382a61;
+}

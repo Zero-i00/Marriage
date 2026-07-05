@@ -1,0 +1,72 @@
+:root {
+  /* Typography */
+  --font-size-display: 5rem;
+  --line-height-display: 5.5rem;
+  --font-weight-display: 800;
+
+  --font-size-h1: 4rem;
+  --line-height-h1: 4.5rem;
+  --font-weight-h1: 600;
+
+  --font-size-h2: 3rem;
+  --line-height-h2: 3.5rem;
+  --font-weight-h2: 600;
+
+  --font-size-h3: 2.25rem;
+  --line-height-h3: 2.75rem;
+  --font-weight-h3: 500;
+
+  --font-size-h4: 1.5rem;
+  --line-height-h4: 2rem;
+  --font-weight-h4: 500;
+
+  --font-size-h5: 1.125rem;
+  --line-height-h5: 1.625rem;
+  --font-weight-h5: 400;
+
+  --font-size-h6: 1rem;
+  --line-height-h6: 1.5rem;
+  --font-weight-h6: 400;
+
+  --font-size-subtitle-1: 1rem;
+  --line-height-subtitle-1: 1.5rem;
+  --font-weight-subtitle-1: 300;
+
+  --font-size-subtitle-2: 0.875rem;
+  --line-height-subtitle-2: 1.375rem;
+  --font-weight-subtitle-2: 300;
+
+  --font-size-body-1: 1rem;
+  --line-height-body-1: 1.5rem;
+  --font-weight-body-1: 300;
+
+  --font-size-body-2: 0.875rem;
+  --line-height-body-2: 1.375rem;
+  --font-weight-body-2: 300;
+
+  --font-size-caption: 0.75rem;
+  --line-height-caption: 1.125rem;
+  --font-weight-caption: 400;
+
+  --font-size-overline: 0.6875rem;
+  --line-height-overline: 1rem;
+  --font-weight-overline: 300;
+
+  /* Border radius */
+  --rounded-xs: 0.1rem;
+  --rounded-tn: 0.3rem;
+  --rounded-sm: 0.35rem;
+  --rounded-md: 0.4rem;
+  --rounded-lg: 0.45rem;
+  --rounded-xl: 0.5rem;
+  --rounded-full: 9999px;
+  --rounded: var(--rounded-sm);
+
+  /* Icons */
+  --icon-xs: 0.75rem;
+  --icon-sm: 1rem;
+  --icon-tn: 1.125rem;
+  --icon-md: 1.5rem;
+  --icon-lg: 2rem;
+  --icon-xl: 3rem;
+}

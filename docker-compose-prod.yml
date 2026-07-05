@@ -1,0 +1,30 @@
+include:
+  - ./app/backend/docker-compose-prod.yml
+  - ./app/bot/docker-compose-prod.yml
+  - ./app/frontend/docker-compose-prod.yml
+
+services:
+  caddy:
+    image: caddy:2-alpine
+    container_name: marriage-caddy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      - app-network
+    depends_on:
+      - frontend
+      - backend
+    restart: unless-stopped
+
+volumes:
+  caddy_data:
+  caddy_config:
+
+networks:
+  app-network:
+    driver: bridge

@@ -1,0 +1,60 @@
+/* Базовые стили */
+.loader {
+  --loader-color: inherit;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--loader-color);
+}
+
+.loader__icon {
+  animation: loader-spin 1s linear infinite;
+}
+
+/* Размеры */
+.loader--xs {
+  width: var(--icon-xs);
+  height: var(--icon-xs);
+  font-size: var(--icon-xs);
+}
+
+.loader--tn {
+  width: var(--icon-tn);
+  height: var(--icon-tn);
+  font-size: var(--icon-tn);
+}
+
+.loader--sm {
+  width: var(--icon-sm);
+  height: var(--icon-sm);
+  font-size: var(--icon-sm);
+}
+
+.loader--md {
+  width: var(--icon-md);
+  height: var(--icon-md);
+  font-size: var(--icon-md);
+}
+
+.loader--lg {
+  width: var(--icon-lg);
+  height: var(--icon-lg);
+  font-size: var(--icon-lg);
+}
+
+.loader--xl {
+  width: var(--icon-xl);
+  height: var(--icon-xl);
+  font-size: var(--icon-xl);
+}
+
+/* Анимации */
+@keyframes loader-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

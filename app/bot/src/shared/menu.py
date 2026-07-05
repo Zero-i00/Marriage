@@ -11,7 +11,8 @@ SUPER_USER_COMMAND_LIST = [
 ]
 
 
-async def set_super_user_menu(bot: Bot, super_user_id: int) -> None:
-    await bot.set_my_commands(
-        SUPER_USER_COMMAND_LIST, scope=BotCommandScopeChat(chat_id=super_user_id)
-    )
+async def set_super_user_menu(bot: Bot, super_user_ids: list[int]) -> None:
+    for super_user_id in super_user_ids:
+        await bot.set_my_commands(
+            SUPER_USER_COMMAND_LIST, scope=BotCommandScopeChat(chat_id=super_user_id)
+        )

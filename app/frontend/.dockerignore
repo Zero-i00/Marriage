@@ -1,0 +1,23 @@
+# Зависимости и билд-артефакты — ставятся/собираются заново в образе
+node_modules/
+.next/
+out/
+next-env.d.ts
+
+# Окружение и секреты — NEXT_PUBLIC_* приходят через build ARG, .env в образ не нужен
+.env
+.env.*
+!.env.example
+
+# Docker / VCS / IDE
+.git/
+.gitignore
+.dockerignore
+docker-compose*.yml
+.idea/
+.vscode/
+
+# Прочее
+*.log
+bun-debug.log*
+README.md

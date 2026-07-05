@@ -1,0 +1,38 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: docker/prod/Dockerfile
+    container_name: marriage-backend
+    env_file:
+      - .env
+    networks:
+      - app-network
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  db:
+    image: postgres:16-alpine
+    container_name: marriage-db
+    env_file:
+      - .env
+    volumes:
+      - marriage-pg-data:/var/lib/postgresql/data
+    networks:
+      - app-network
+    healthcheck:
+      # $$ — литеральный $, переменные разворачиваются shell'ом внутри контейнера.
+      test: ["CMD-SHELL", "pg_isready -U \"$$POSTGRES_USER\" -d \"$$POSTGRES_DB\""]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+volumes:
+  marriage-pg-data:
+
+networks:
+  app-network:
+    driver: bridge

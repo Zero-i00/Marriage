@@ -1,3 +1,4 @@
 include:
   - ./app/backend/docker-compose-local.yml
   - ./app/bot/docker-compose-local.yml
+  - ./app/frontend/docker-compose-local.yml

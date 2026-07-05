@@ -1,0 +1,19 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/prod/Dockerfile
+      args:
+        NEXT_PUBLIC_PORT: "${NEXT_PUBLIC_PORT:-3000}"
+        NEXT_PUBLIC_HOST: "${NEXT_PUBLIC_HOST:-https://marriage.soft-stack.ru}"
+        NEXT_PUBLIC_SERVER_URL: "${NEXT_PUBLIC_SERVER_URL:-https://marriage.soft-stack.ru}"
+    container_name: marriage-frontend
+    networks:
+      - app-network
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+networks:
+  app-network:
+    driver: bridge

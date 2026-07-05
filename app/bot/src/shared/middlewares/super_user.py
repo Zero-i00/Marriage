@@ -18,8 +18,8 @@ class SuperUserOnlyMiddleware(BaseMiddleware):
     а не тишину.
     """
 
-    def __init__(self, super_user_id: int) -> None:
-        self.super_user_id = super_user_id
+    def __init__(self, super_user_ids: list[int]) -> None:
+        self.super_user_ids = super_user_ids
 
     async def __call__(
         self,
@@ -28,7 +28,7 @@ class SuperUserOnlyMiddleware(BaseMiddleware):
         data: dict[str, Any],
     ) -> Any:
         user: User | None = data.get("event_from_user")
-        if user is None or user.id != self.super_user_id:
+        if user is None or user.id not in self.super_user_ids:
             if isinstance(event, Message):
                 await event.answer(DENY_MESSAGE)
             return None

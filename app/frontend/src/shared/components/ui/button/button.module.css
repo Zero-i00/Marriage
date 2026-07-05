@@ -1,0 +1,119 @@
+:root {
+  --btn-font-weight: 500;
+}
+
+/* Базовые стили */
+.btn {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid;
+  outline-width: 1px;
+  border-radius: var(--rounded);
+  transition:
+    background-color 0.4s ease-in-out,
+    color 0.4s ease-in-out,
+    transform 0.2s ease;
+  overflow: hidden;
+  position: relative;
+
+  --btn-color: var(--color-white);
+  --btn-bg: var(--color-primary-500);
+  --btn-border: var(--color-primary-500);
+  --btn-hover: var(--color-primary-600);
+  --btn-outline: var(--color-primary-900);
+
+  --btn-opacity-bg: var(--color-primary-opacity-light);
+  --btn-opacity-hover: var(--color-primary-opacity-lighter);
+}
+
+/* События */
+.btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+/* Варианты */
+.btn--default {
+  color: var(--btn-color);
+  background-color: var(--btn-bg);
+  border-color: var(--btn-border);
+  outline-color: var(--btn-outline);
+
+  --btn-loader: var(--color-white);
+}
+
+.btn--default:hover:not(:disabled) {
+  background-color: var(--btn-hover);
+}
+
+.btn--icon {
+  color: var(--btn-bg);
+  border-color: transparent;
+  background-color: transparent;
+  aspect-ratio: 1;
+  width: var(--btn-icon-size);
+  height: var(--btn-icon-size);
+  padding: 0;
+
+  --btn-loader: var(--btn-bg);
+}
+
+.btn--icon:hover:not(:disabled) {
+  background-color: var(--btn-opacity-hover);
+}
+
+/* Размеры */
+.btn--xs {
+  padding: 6px 12px;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: var(--btn-font-weight);
+  --btn-icon-size: 30px;
+}
+
+.btn--tn {
+  padding: 8px 16px;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: var(--btn-font-weight);
+  --btn-icon-size: 36px;
+}
+
+.btn--sm {
+  padding: 8px 14px;
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: var(--btn-font-weight);
+  --btn-icon-size: 34px;
+}
+
+.btn--md {
+  padding: 8px 18px;
+  font-size: 15px;
+  line-height: 22px;
+  font-weight: var(--btn-font-weight);
+  --btn-icon-size: 38px;
+}
+
+.btn--lg {
+  padding: 8px 22px;
+  font-size: 17px;
+  line-height: 26px;
+  font-weight: var(--btn-font-weight);
+  --btn-icon-size: 42px;
+}
+
+.btn--xl {
+  padding: 8px 26px;
+  font-size: 19px;
+  line-height: 30px;
+  font-weight: var(--btn-font-weight);
+  --btn-icon-size: 46px;
+}
+
+/* Загрузчик */
+.btn__loader {
+  color: var(--btn-loader);
+}

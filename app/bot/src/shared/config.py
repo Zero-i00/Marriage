@@ -22,7 +22,7 @@ class Settings(BaseSettings):
 
     bot_token: SecretStr
     bot_proxy_url: SecretStr
-    bot_super_user_id: int
+    tg_bot_super_user_id_list: list[int] = Field(default_factory=list)
 
     server: ServerSettings = Field(default_factory=ServerSettings)
 

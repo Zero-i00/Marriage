@@ -6,6 +6,7 @@
     "skipLibCheck": true,
     "strict": true,
     "noEmit": true,
+    "verbatimModuleSyntax": true,
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "bundler",
@@ -28,7 +29,9 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
-    "**/*.mts"
+    "**/*.mts",
+    "/tmp/claude-1000/-home-artem-----------Projects-Marriage/f08338eb-6e7d-42f7-860c-194a627e017c/scratchpad/next-verify-dist/types/**/*.ts",
+    "/tmp/claude-1000/-home-artem-----------Projects-Marriage/f08338eb-6e7d-42f7-860c-194a627e017c/scratchpad/next-verify-dist/dev/types/**/*.ts"
   ],
   "exclude": ["node_modules"]
 }

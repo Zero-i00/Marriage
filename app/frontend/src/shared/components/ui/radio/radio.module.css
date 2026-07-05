@@ -1,0 +1,280 @@
+/* Wrapper */
+.wrapper {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Label */
+.label {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  transition: opacity 0.2s;
+}
+
+.label--disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.label--error {
+  color: var(--color-error-500);
+}
+
+/* Container */
+.container {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-right: 8px;
+}
+
+/* Hidden input */
+.input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+/* Radio */
+.radio {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid;
+  border-radius: 50%;
+  border-color: var(--color-gray-300);
+  background-color: transparent;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
+}
+
+@keyframes scale-in {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* Label text */
+.label-text {
+  margin-left: 8px;
+  font-size: var(--font-size-body-1);
+  line-height: var(--line-height-body-1);
+  font-weight: 300;
+  color: inherit;
+}
+
+/* Hint */
+.hint {
+  margin-left: 26px;
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  color: var(--color-primary-500);
+  transition: color 0.2s;
+}
+
+.hint--error {
+  color: var(--color-error-500);
+}
+
+/* Hover state */
+.label:hover:not(.label--disabled) .radio {
+  box-shadow: 0 0 0 4px
+    var(--radio-hover-shadow, var(--color-primary-opacity-lighter));
+}
+
+/* Focus-visible state */
+.input:focus-visible + .radio {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+}
+
+/* Checked state */
+.radio--checked {
+  border-color: var(--radio-checked-bg, var(--color-primary-500));
+  --radio-hover-shadow: var(--color-primary-opacity-lighter);
+}
+
+/* Disabled state */
+.radio--disabled {
+  border-color: var(--color-primary-200);
+  background-color: var(--color-primary-100);
+  cursor: not-allowed;
+}
+
+.radio--disabled.radio--checked {
+  background-color: var(--color-primary-300);
+}
+
+.radio--disabled .dot {
+  background-color: var(--color-primary-100);
+}
+
+/* Error state */
+.radio--error {
+  border-color: var(--color-error-500);
+}
+
+.radio--error.radio--checked {
+  --radio-checked-bg: var(--color-error-500);
+}
+
+.label:hover:not(.label--disabled) .radio--error {
+  box-shadow: 0 0 0 4px var(--color-error-opacity-lighter);
+}
+
+/* Размеры */
+
+/* Extra Small */
+.radio--xs {
+  width: 18px;
+  height: 18px;
+  border-width: 2px;
+}
+
+.radio--xs .icon {
+  width: var(--icon-xs);
+  height: var(--icon-xs);
+}
+
+/* Label text для xs */
+.label--xs .label-text {
+  font-size: 10px;
+  line-height: 14px;
+}
+
+/* Hint для xs */
+.label--xs + .hint {
+  font-size: 10px;
+  line-height: 14px;
+  margin-left: 14px;
+}
+
+/* Tiny */
+.radio--tn {
+  width: 24px;
+  height: 24px;
+  border-width: 2px;
+}
+
+.radio--tn .icon {
+  width: var(--icon-tn);
+  height: var(--icon-tn);
+}
+
+/* Label text для tn */
+.label--tn .label-text {
+  font-size: var(--font-size-body-2);
+  line-height: var(--line-height-body-2);
+}
+
+/* Hint для tn */
+.label--tn + .hint {
+  font-size: 13px;
+  line-height: 17px;
+  margin-left: 22px;
+}
+
+/* Small */
+.radio--sm {
+  width: 22px;
+  height: 22px;
+  border-width: 2px;
+}
+
+.radio--sm .icon {
+  width: var(--icon-sm);
+  height: var(--icon-sm);
+}
+
+/* Label text для sm */
+.label--sm .label-text {
+  font-size: var(--font-size-overline);
+  line-height: var(--line-height-overline);
+}
+
+/* Hint для sm */
+.label--sm + .hint {
+  font-size: 12px;
+  line-height: 16px;
+  margin-left: 20px;
+}
+
+/* Medium (значения по умолчанию) */
+.radio--md {
+  width: 26px;
+  height: 26px;
+  border-width: 2px;
+}
+
+.radio--md .icon {
+  width: 14px;
+  height: 14px;
+}
+
+.label--md .label-text {
+  font-size: var(--font-size-body-1);
+  line-height: var(--line-height-body-1);
+}
+
+.label--md + .hint {
+  font-size: var(--font-size-body-2);
+  line-height: var(--line-height-body-2);
+  margin-left: 26px;
+}
+
+/* Large */
+.radio--lg {
+  width: 30px;
+  height: 30px;
+  border-width: 3px;
+}
+
+.radio--lg .icon {
+  width: 17px;
+  height: 17px;
+}
+
+.label--lg .label-text {
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.label--lg + .hint {
+  font-size: 15px;
+  line-height: 20px;
+  margin-left: 30px;
+}
+
+/* Extra Large */
+.radio--xl {
+  width: 34px;
+  height: 34px;
+  border-width: 3px;
+}
+
+.radio--xl .icon {
+  width: 20px;
+  height: 20px;
+}
+
+.label--xl .label-text {
+  font-size: 20px;
+  line-height: 28px;
+}
+
+.label--xl + .hint {
+  font-size: 16px;
+  line-height: 22px;
+  margin-left: 36px;
+}
