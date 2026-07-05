@@ -1,4 +1,7 @@
+from contextlib import suppress
+
 from aiogram import Bot, Router
+from aiogram.exceptions import TelegramBadRequest
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, Message
@@ -67,6 +70,10 @@ async def create_drink_submit(message: Message, state: FSMContext, bot: Bot) -> 
             await message.answer("Такой напиток уже есть. Попробуй другое название:")
             return
         raise
+
+    # чистим чат: убираем введённое админом название напитка
+    with suppress(TelegramBadRequest):
+        await message.delete()
 
     data = await state.get_data()
     await state.clear()

@@ -1,4 +1,7 @@
+from contextlib import suppress
+
 from aiogram import Bot, Router
+from aiogram.exceptions import TelegramBadRequest
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, Message
@@ -105,6 +108,8 @@ async def create_guests(message: Message, state: FSMContext, bot: Bot) -> None:
     if not names:
         await message.answer("Введи хотя бы одно имя:")
         return
+    with suppress(TelegramBadRequest):
+        await message.delete()
     drinks = await drink_service.list()
     await state.update_data(guests=names, selected_drink_ids=[])
     await state.set_state(FSMInvitationState.drinks)
@@ -153,6 +158,8 @@ async def create_music_skip(callback: CallbackQuery, state: FSMContext) -> None:
 @router.message(FSMInvitationState.music)
 async def create_music(message: Message, state: FSMContext, bot: Bot) -> None:
     await state.update_data(music=message.text.strip() or None)
+    with suppress(TelegramBadRequest):
+        await message.delete()
     await state.set_state(FSMInvitationState.comment)
     data = await state.get_data()
     await bot.edit_message_text(
@@ -178,6 +185,8 @@ async def create_comment(message: Message, state: FSMContext, bot: Bot) -> None:
     data = await state.get_data()
     await state.clear()
     await _submit(data)
+    with suppress(TelegramBadRequest):
+        await message.delete()
     items = await invitation_service.list()
     page = max(0, len(items) - 1)
     if items:
