@@ -25,8 +25,10 @@ def init_bot() -> Bot:
 def init_dispatcher() -> Dispatcher:
     dp = Dispatcher()
 
-    dp.message.outer_middleware(SuperUserOnlyMiddleware(settings.bot_super_user_id))
-    dp.callback_query.outer_middleware(SuperUserOnlyMiddleware(settings.bot_super_user_id))
+    dp.message.outer_middleware(SuperUserOnlyMiddleware(settings.tg_bot_super_user_id_list))
+    dp.callback_query.outer_middleware(
+        SuperUserOnlyMiddleware(settings.tg_bot_super_user_id_list)
+    )
 
     dp.update.middleware(UserContextMiddleware())
 
@@ -40,7 +42,7 @@ async def main() -> None:
     dp = init_dispatcher()
 
     await bot.delete_webhook(True)
-    await set_super_user_menu(bot, settings.bot_super_user_id)
+    await set_super_user_menu(bot, settings.tg_bot_super_user_id_list)
 
     async with make_query_client():
         await dp.start_polling(bot)

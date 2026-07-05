@@ -31,7 +31,7 @@ class DatabaseSettings(BaseSettings):
 class TelegramBotSettings(BaseSettings):
     model_config = BaseConfig
 
-    tg_bot_super_user_id: str
+    tg_bot_super_user_id_list: list[str] = Field(default_factory=list)
 
 
 class Settings(BaseSettings):

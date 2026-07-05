@@ -461,7 +461,7 @@ class GuestResolver:
 curl -i -X POST localhost:8000/drink \
   -H 'Content-Type: application/json' -d '{"title":"Beer"}'
 
-# с верным id из TG_BOT_SUPER_USER_ID → 201
+# с id из TG_BOT_SUPER_USER_ID_LIST → 201
 curl -i -X POST localhost:8000/drink \
   -H 'X-BOT-USER-ID: 1529841680' \
   -H 'Content-Type: application/json' -d '{"title":"Beer"}'

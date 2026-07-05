@@ -8,22 +8,22 @@ services:
       - .env
     volumes:
       - .:/app
-    # временно: host network, чтобы api.telegram.org шёл через VPN хоста напрямую, без прокси-контейнера
-    network_mode: host
+    networks:
+      - app-network
     depends_on:
       - backend
-#      - proxy
+      - proxy
     restart: unless-stopped
 
-#  proxy:
-#    image: ghcr.io/sagernet/sing-box:latest
-#    container_name: marriage-proxy-local
-#    command: ["run", "-c", "/etc/sing-box/config.json"]
-#    volumes:
-#      - ./sing-box.json:/etc/sing-box/config.json:ro
-#    networks:
-#      - app-network
-#    restart: unless-stopped
+  proxy:
+    image: ghcr.io/sagernet/sing-box:latest
+    container_name: marriage-proxy-local
+    command: ["run", "-c", "/etc/sing-box/config.json"]
+    volumes:
+      - ./sing-box.json:/etc/sing-box/config.json:ro
+    networks:
+      - app-network
+    restart: unless-stopped
 
 networks:
   app-network:
