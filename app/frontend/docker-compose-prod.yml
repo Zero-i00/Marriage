@@ -1,25 +1,17 @@
 services:
-  bot:
+  frontend:
     build:
       context: .
       dockerfile: docker/prod/Dockerfile
-    container_name: marriage-bot
-    env_file:
-      - .env
+      args:
+        NEXT_PUBLIC_PORT: "${NEXT_PUBLIC_PORT:-3000}"
+        NEXT_PUBLIC_HOST: "${NEXT_PUBLIC_HOST:-https://marriage.soft-stack.ru}"
+        NEXT_PUBLIC_SERVER_URL: "${NEXT_PUBLIC_SERVER_URL:-https://marriage.soft-stack.ru}"
+    container_name: marriage-frontend
     networks:
       - app-network
     depends_on:
-      - proxy
-    restart: unless-stopped
-
-  proxy:
-    image: ghcr.io/sagernet/sing-box:latest
-    container_name: marriage-proxy
-    command: ["run", "-c", "/etc/sing-box/config.json"]
-    volumes:
-      - ./sing-box.json:/etc/sing-box/config.json:ro
-    networks:
-      - app-network
+      - backend
     restart: unless-stopped
 
 networks:

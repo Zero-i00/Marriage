@@ -25,6 +25,33 @@
 }
 
 /**
+ * Базовые стили для поля ввода
+ */
+.input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  transition: border-color 0.2s ease;
+
+  /* Стандартный placeholder */
+  &::placeholder {
+    color: var(--color-gray-opacity-main);
+  }
+
+  /* Убираем стандартные браузерные стили валидации */
+  &:required,
+  &:invalid {
+    box-shadow: none;
+  }
+
+  /* Убираем стандартный крестик у search input */
+  &::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+  }
+}
+
+/**
  * Модификаторы размеров обёртки
  */
 
@@ -126,33 +153,6 @@
 /* При фокусе на успешном поле - рамка остаётся зелёной */
 .input__wrapper--success:focus-within {
   border-color: var(--color-success-500);
-}
-
-/**
- * Базовые стили для поля ввода
- */
-.input {
-  width: 100%;
-  border: none;
-  outline: none;
-  background: transparent;
-  transition: border-color 0.2s ease;
-
-  /* Стандартный placeholder */
-  &::placeholder {
-    color: var(--color-gray-opacity-main);
-  }
-
-  /* Убираем стандартные браузерные стили валидации */
-  &:required,
-  &:invalid {
-    box-shadow: none;
-  }
-
-  /* Убираем стандартный крестик у search input */
-  &::-webkit-search-cancel-button {
-    -webkit-appearance: none;
-  }
 }
 
 /**

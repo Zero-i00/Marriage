@@ -23,7 +23,7 @@ export async function InvitationSection({
     <AnimatedSection
       id={id}
       className={twMerge(
-        "container-section relative flex flex-col gap-10 overflow-hidden bg-natural-100",
+        "container-section relative flex flex-col gap-10 overflow-hidden",
         className,
       )}
       {...rest}

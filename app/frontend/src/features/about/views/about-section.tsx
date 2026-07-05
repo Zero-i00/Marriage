@@ -15,10 +15,7 @@ export function AboutSection({
   return (
     <AnimatedSection
       id={id}
-      className={twMerge(
-        "about-reveal container-section bg-natural-100",
-        className,
-      )}
+      className={twMerge("about-reveal container-section", className)}
       {...rest}
     >
       <div className="mx-auto flex flex-col items-center gap-12 lg:flex-row lg:items-center lg:gap-16">

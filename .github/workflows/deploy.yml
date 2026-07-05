@@ -1,0 +1,78 @@
+name: Deploy
+
+on:
+  push:
+    tags:
+      - "v*"
+
+concurrency:
+  group: production-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      # --- секреты ---
+      POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+      POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+      TG_BOT_SUPER_USER_ID_LIST: ${{ secrets.TG_BOT_SUPER_USER_ID_LIST }}
+      VLESS_HOST: ${{ secrets.VLESS_HOST }}
+      VLESS_UUID: ${{ secrets.VLESS_UUID }}
+      REALITY_SNI: ${{ secrets.REALITY_SNI }}
+      REALITY_PUBLIC_KEY: ${{ secrets.REALITY_PUBLIC_KEY }}
+      REALITY_SHORT_ID: ${{ secrets.REALITY_SHORT_ID }}
+      # --- прод-оверрайды дефолтов из .env.example (не секреты) ---
+      APP_DEBUG: "False"
+      SERVER_URL: "http://backend:8000"
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Render backend .env
+        run: deployment/render-env.sh app/backend/.env.example app/backend/.env
+
+      - name: Render bot .env
+        run: deployment/render-env.sh app/bot/.env.example app/bot/.env
+
+      - name: Render sing-box.json
+        run: deployment/render-singbox.sh app/bot/sing-box.example.json app/bot/sing-box.json
+
+      - name: Sync tag on server
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            set -euo pipefail
+            cd /opt/marriage
+            git fetch --tags --force
+            git checkout --force "${{ github.ref_name }}"
+
+      - name: Upload rendered env/secrets
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "app/backend/.env,app/bot/.env,app/bot/sing-box.json"
+          target: "/opt/marriage"
+          strip_components: 0
+
+      - name: Build and restart stack
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            set -euo pipefail
+            cd /opt/marriage
+            docker compose -f docker-compose-prod.yml up -d --build
+            docker image prune -f

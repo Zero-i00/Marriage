@@ -19,10 +19,7 @@ export function PlaceSection({
   return (
     <AnimatedSection
       id={id}
-      className={twMerge(
-        "container-section flex flex-col gap-10 bg-natural-100",
-        className,
-      )}
+      className={twMerge("container-section flex flex-col gap-10", className)}
       {...rest}
     >
       <div
