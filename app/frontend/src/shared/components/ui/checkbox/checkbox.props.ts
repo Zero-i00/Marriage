@@ -3,54 +3,16 @@ import type { TypeIconSize } from "@/app/styles/types/size.type";
 
 type CheckboxElement = Omit<ComponentProps<"input">, "size" | "checked">;
 
-/**
- * Свойства компонента Checkbox
- */
+/** Свойства компонента Checkbox */
 export interface CheckboxProps extends CheckboxElement {
-  /**
-   * Текстовая метка чекбокса
-   *
-   * @remarks
-   * Отображается справа от чекбокса. При клике на метку чекбокс переключается.
-   */
+  /** Текстовая метка справа от чекбокса */
   label?: string;
-
-  /**
-   * Состояние чекбокса (выбран/не выбран)
-   *
-   * @remarks
-   * Используйте этот проп для контролируемого компонента.
-   * Для неконтролируемого используйте стандартный HTML атрибут defaultChecked.
-   *
-   * @default false
-   */
+  /** Состояние чекбокса (контролируемый режим) @default false */
   isChecked?: boolean;
-
-  /**
-   * Состояние ошибки
-   *
-   * @remarks
-   * При true чекбокс отображается с красной обводкой
-   *
-   * @default false
-   */
+  /** Красная обводка при ошибке @default false */
   error?: boolean;
-
-  /**
-   * Вспомогательный текст под чекбоксом
-   *
-   * @remarks
-   * Обычно используется для отображения ошибок валидации или подсказок
-   */
+  /** Вспомогательный текст под чекбоксом */
   hint?: string;
-
-  /**
-   * Размер checkbox
-   *
-   * @remarks
-   * Определяет размер checkbox из предопределенного набора значений
-   *
-   * @default 'sm'
-   */
+  /** Размер чекбокса @default 'sm' */
   size?: TypeIconSize;
 }

@@ -1,12 +1,7 @@
 import type { ComponentProps, ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
-import type { DelayStyle } from "@/shared/lib/section-animation";
+import { delay } from "@/shared/lib/section-animation";
 import styles from "./arch.module.css";
-
-// Локальный delay: тут задержки — строки ("0.15s"), а не секунды (интра-компонентный
-// стаггер путей арки), поэтому переиспользовать shared/lib/section-animation's delay() нельзя,
-// но тип стиля общий.
-const delay = (value: string): DelayStyle => ({ "--delay": value });
 
 /**
  * Декоративная арка с кольцами, гирляндами оливковых листьев и монограммой "A & B".

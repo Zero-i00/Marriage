@@ -6,28 +6,8 @@ import type { RadioProps } from "./radio.props";
 /**
  * Радио-кнопка на нативном `<input type="radio">`
  *
- * @description
- * Поддерживает:
- * - Состояния: обычное, выбранное, отключенное, ошибка
- * - Label и вспомогательный текст (hint)
- * - ARIA-атрибуты (aria-checked/aria-invalid/aria-disabled)
- *
- * @param {RadioProps} props - Свойства компонента
- * @param {Ref<HTMLInputElement>} ref - React ref для доступа к DOM элементу input
- * @param {string} [props.label] - Текстовая метка радио-кнопки
- * @param {boolean} [props.isChecked=false] - Состояние радио-кнопки (контролируемый режим)
- * @param {'xs' | 'sm' | 'tn' | 'md' | 'lg' | 'xl'} [props.size='sm'] - Размер radio
- * @param {boolean} [props.error=false] - Состояние ошибки
- * @param {string} [props.hint] - Вспомогательный текст
- * @param {boolean} [props.disabled=false] - Отключенное состояние
- * @param {string} [props.className] - Дополнительные CSS классы
- *
  * @example
- * <Radio
- *   name="gender"
- *   label="Мужской"
- *   onChange={(e) => console.log(e.target.checked)}
- * />
+ * <Radio name="gender" label="Мужской" onChange={(e) => console.log(e.target.checked)} />
  */
 function RadioInner(
   {

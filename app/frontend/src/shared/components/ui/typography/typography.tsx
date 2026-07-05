@@ -2,12 +2,7 @@ import cn from "clsx";
 import styles from "./typography.module.css";
 import type { TypographyProps, TypographyVariant } from "./typography.props";
 
-/**
- * Определяет HTML элемент по умолчанию на основе variant
- *
- * @param variant - Вариант типографики
- * @returns HTML элемент, соответствующий semantic HTML best practices
- */
+/** HTML-элемент по умолчанию для каждого варианта типографики */
 const TYPOGRAPHY_MAPPED_ELEMENT: Record<
   TypographyVariant,
   keyof HTMLElementTagNameMap
@@ -27,18 +22,7 @@ const TYPOGRAPHY_MAPPED_ELEMENT: Record<
 };
 
 /**
- * Компонент Typography для отображения текста с заданным стилем типографики
- *
- * @description
- * Предоставляет семантическое отображение текста с применением стилей из design system.
- * Поддерживает все варианты типографики (заголовки, подзаголовки, текст).
- * Автоматически использует семантически правильные HTML элементы.
- *
- * @param {TypographyProps} props - Свойства компонента
- * @param {'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'subtitle-1' | 'subtitle-2' | 'body-1' | 'body-2' | 'caption' | 'overline'} props.variant - Вариант типографики (обязательный)
- * @param {string} [props.as] - HTML-тег для рендера вместо тега по умолчанию для variant
- * @param {React.ReactNode} props.children - Содержимое
- * @param {string} [props.className] - Дополнительные CSS классы
+ * Текст с заданным вариантом типографики, рендерит семантически правильный HTML-тег.
  *
  * @example
  * <Typography variant="h1">Заголовок первого уровня</Typography>
