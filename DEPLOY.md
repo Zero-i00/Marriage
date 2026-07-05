@@ -88,6 +88,19 @@ cd /opt/marriage
 Все остальные прод-переменные (например `APP_DEBUG=False`, `SERVER_URL=http://backend:8000`)
 уже зашиты в `.github/workflows/deploy.yml` — их не нужно вручную указывать в GitHub.
 
+**Локальная проверка рендера** (без пуша тега) — `deployment/render-env.sh` и
+`deployment/render-singbox.sh` берут секреты из переменных окружения **текущего процесса**,
+поэтому их нужно `export`-ить (обычное присваивание `VAR=xxx` без экспорта в дочерний
+скрипт-процесс не попадёт):
+
+```bash
+export VLESS_HOST=de.soft-stack.ru VLESS_UUID=... REALITY_SNI=de.soft-stack.ru \
+       REALITY_PUBLIC_KEY=... REALITY_SHORT_ID=...
+deployment/render-singbox.sh app/bot/sing-box.example.json app/bot/sing-box.json
+```
+
+В самом GitHub Actions это не нужно — `env:` в workflow экспортируется на все шаги автоматически.
+
 ## 6. Branch protection для `master`
 
 **Settings → Branches → Add rule** для `master`:

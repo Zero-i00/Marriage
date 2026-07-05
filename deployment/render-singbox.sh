@@ -3,6 +3,16 @@
 #
 # Подставляет VLESS/Reality-секреты в sing-box.example.json через envsubst,
 # ограниченный явным списком переменных (чтобы случайно не тронуть другие $-строки).
+#
+# ВАЖНО: переменные должны быть ЭКСПОРТИРОВАНЫ — скрипт запускается как отдельный
+# дочерний процесс, обычное присваивание в шелле (VLESS_HOST=xxx) в него не попадёт.
+# Локальный запуск:
+#   export VLESS_HOST=... VLESS_UUID=... REALITY_SNI=... REALITY_PUBLIC_KEY=... REALITY_SHORT_ID=...
+#   deployment/render-singbox.sh app/bot/sing-box.example.json app/bot/sing-box.json
+# либо одной командой (инлайн-присваивание перед вызовом экспортируется само):
+#   VLESS_HOST=... VLESS_UUID=... REALITY_SNI=... REALITY_PUBLIC_KEY=... REALITY_SHORT_ID=... \
+#     deployment/render-singbox.sh app/bot/sing-box.example.json app/bot/sing-box.json
+# В GitHub Actions это не проблема — там `env:` в workflow экспортируется на все шаги.
 set -euo pipefail
 
 : "${1:?usage: render-singbox.sh <template> <out>}"
