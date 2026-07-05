@@ -212,9 +212,9 @@
 
 /* Label text для sm */
 .label--sm .label-text {
-  font-size: var(--font-size-overline);
+  font-size: var(--font-size-subtitle-1);
   font-weight: var(--font-weight-overline);
-  line-height: var(--line-height-overline);
+  line-height: var(--line-height-subtitle-1);
 }
 
 /* Hint для sm */

@@ -161,9 +161,9 @@
 .textarea__label {
   margin: 4px;
   color: var(--color-gray-900);
-  font-size: var(--font-size-subtitle-2);
+  font-size: var(--font-size-subtitle-1);
   font-weight: var(--font-weight-subtitle-2);
-  line-height: var(--line-height-subtitle-2);
+  line-height: var(--line-height-subtitle-1);
 }
 
 /* Подсказка (hint) */

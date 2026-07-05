@@ -156,13 +156,13 @@ export function InvitationForm({ method = "POST", className, ...rest }: Props) {
           <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-sm border-2 border-primary-400">
             <Plus size={ICON_SIZE.xs} className="text-primary-700" />
           </span>
-          <Typography variant="body-2">
+          <Typography variant="subtitle-1">
             Да (вторая половинка / ребёнок)
           </Typography>
         </button>
 
         {fields.slice(1).map((field, index) => (
-          <div key={field.id} className="flex items-start gap-2">
+          <div key={field.id} className="flex items-center gap-2">
             <Controller
               control={control}
               name={`guests.${index + 1}.full_name`}
@@ -177,20 +177,24 @@ export function InvitationForm({ method = "POST", className, ...rest }: Props) {
                 />
               )}
             />
-            <Button
+            <button
               type="button"
               variant="icon"
               size="lg"
               aria-label="Удалить гостя"
-              className="mt-auto"
               onClick={() => remove(index + 1)}
+              className="flex justify-center items-center cursor-pointer"
             >
-              <Trash size={ICON_SIZE.sm} />
-            </Button>
+              <Trash size={ICON_SIZE.sm} className={"text-error-500"} />
+            </button>
           </div>
         ))}
 
-        <Checkbox label="Нет" isChecked={fields.length === 1} />
+        <Checkbox
+          label="Нет"
+          isChecked={fields.length === 1}
+          disabled={fields.length !== 1}
+        />
       </div>
 
       {drinks.length > 0 && (
