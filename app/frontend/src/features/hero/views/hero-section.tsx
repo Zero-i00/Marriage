@@ -49,6 +49,10 @@ export function HeroSection({
       )}
       {...rest}
     >
+      <Typography variant="h1" className="sr-only">
+        Свадьба Артёма и Варвары — 28 августа 2026
+      </Typography>
+
       {/* ≥901px: имя+линия одним рядом через всю ширину */}
       <div className="flex items-center justify-start overflow-hidden max-[900px]:hidden">
         <VarvaraName className="h-auto w-full max-w-[900px]" />

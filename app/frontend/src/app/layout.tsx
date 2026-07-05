@@ -26,6 +26,7 @@ export const metadata: Metadata = {
   },
   description: SEO_DESCRIPTION,
   keywords: SEO_KEYWORDS,
+  robots: { index: false, follow: false },
   openGraph: {
     title: SITE_NAME,
     description: SEO_DESCRIPTION,
@@ -34,7 +35,7 @@ export const metadata: Metadata = {
     locale: "ru_RU",
     url: SEO_URL,
     images: [
-      { url: "/seo/preview.wepb", width: 400, height: 400, alt: SITE_NAME },
+      { url: "/seo/preview.webp", width: 1200, height: 630, alt: SITE_NAME },
     ],
   },
 };
