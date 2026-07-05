@@ -179,8 +179,6 @@ export function InvitationForm({ method = "POST", className, ...rest }: Props) {
             />
             <button
               type="button"
-              variant="icon"
-              size="lg"
               aria-label="Удалить гостя"
               onClick={() => remove(index + 1)}
               className="flex justify-center items-center cursor-pointer"
