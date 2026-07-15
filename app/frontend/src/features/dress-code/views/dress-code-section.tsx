@@ -40,52 +40,51 @@ const GENTLEMEN = [
 const STAGGER = 0.08;
 
 function Group({
-                 title,
-                 description,
-                 colors,
-                 startDelay,
-               }: {
+  title,
+  description,
+  colors,
+  startDelay,
+}: {
   title: string;
   description: string;
   colors: readonly string[];
   startDelay: number;
 }) {
   return (
-      <div className="flex flex-col gap-5">
-        <Typography
-            variant="h2"
-            as="h2"
-            className="animate-fade-in-up text-primary-900 text-3xl! sm:text-5xl!"
-            style={delay(startDelay - 0.2)}
-        >
-          {title}
-        </Typography>
-        <Typography
-            variant="subtitle-1"
-            className="animate-fade-in-up text-primary-500"
-            style={delay(startDelay - 0.1)}
-        >
-          {description}
-        </Typography>
-        <ul className="flex flex-wrap gap-4 sm:gap-5">
-          {colors.map((color, index) => (
-              <li
-                  key={color}
-                  className="animate-fade-in-up"
-                  style={delay(startDelay + index * STAGGER)}
-              >
+    <div className="flex flex-col gap-5">
+      <Typography
+        variant="h2"
+        as="h2"
+        className="animate-fade-in-up text-primary-900 text-3xl! sm:text-5xl!"
+        style={delay(startDelay - 0.2)}
+      >
+        {title}
+      </Typography>
+      <Typography
+        variant="subtitle-1"
+        className="animate-fade-in-up text-primary-500"
+        style={delay(startDelay - 0.1)}
+      >
+        {description}
+      </Typography>
+      <ul className="flex flex-wrap gap-4 sm:gap-5">
+        {colors.map((color, index) => (
+          <li
+            key={color}
+            className="animate-fade-in-up"
+            style={delay(startDelay + index * STAGGER)}
+          >
             <span
-                className="block size-14 rounded-full ring-1 ring-primary-opacity-light sm:size-20"
-                style={{ backgroundColor: color }}
-                aria-hidden
+              className="block size-14 rounded-full ring-1 ring-primary-opacity-light sm:size-20"
+              style={{ backgroundColor: color }}
+              aria-hidden
             />
-              </li>
-          ))}
-        </ul>
-      </div>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
-
 
 export function DressCodeSection({
   id = ROOT_SECTION.DRESS_CODE,
