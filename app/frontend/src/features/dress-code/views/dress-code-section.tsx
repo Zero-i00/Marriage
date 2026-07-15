@@ -119,7 +119,7 @@ export function DressCodeSection({
 
       <Group
         title="Джентельмены,"
-        description="просим вас соблюдать дресс-код: белая рубашки, костюм"
+        description="просим вас соблюдать дресс-код: белая рубашка, костюм"
         colors={GENTLEMEN}
         startDelay={0.3 + LADIES.length * STAGGER}
       />
