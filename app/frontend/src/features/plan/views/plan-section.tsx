@@ -9,17 +9,17 @@ import { delay } from "@/shared/lib/section-animation";
 // Каждая картинка уже содержит линию-коннектор, иконку, время и подпись целиком.
 const TIMELINE = [
   {
-    src: "/plan/time/15-00.webp",
+    src: "/plan/time/15-30.webp",
     alt: "15:00 — Сбор гостей",
     intrinsic: [2567, 502],
   },
   {
-    src: "/plan/time/15-30.webp",
+    src: "/plan/time/16-00.webp",
     alt: "15:30 — Фуршет",
     intrinsic: [2567, 568],
   },
   {
-    src: "/plan/time/16-00.webp",
+    src: "/plan/time/16-30.webp",
     alt: "16:00 — Выездная церемония",
     intrinsic: [2845, 443],
   },

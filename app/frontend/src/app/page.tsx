@@ -1,5 +1,6 @@
 import { Fragment } from "react";
 import { AboutSection } from "@/features/about";
+import { DressCodeSection } from "@/features/dress-code";
 import { GladToSeeYouSection } from "@/features/glad-to-see-you";
 import { HeroSection } from "@/features/hero";
 import { InvitationSection } from "@/features/invitation";
@@ -13,6 +14,7 @@ export default function Home() {
       <AboutSection />
       <PlaceSection />
       <PlanSection />
+      <DressCodeSection />
       <InvitationSection />
       <GladToSeeYouSection />
     </Fragment>

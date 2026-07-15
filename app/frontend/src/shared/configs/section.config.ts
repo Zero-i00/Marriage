@@ -4,6 +4,7 @@ class RootSection {
   public readonly ABOUT = "about-section";
   public readonly PLACE = "place-section";
   public readonly PLAN = "plan-section";
+  public readonly DRESS_CODE = "dress-code-section";
   public readonly INVITATION = "invitation-section";
   public readonly GLAD_TO_SEE_YOU = "glad-to-see-you-section";
 

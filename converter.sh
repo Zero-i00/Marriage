@@ -17,6 +17,7 @@ else
     BOLD=''; DIM=''; RED=''; GRN=''; YLW=''; BLU=''; RST=''
 fi
 
+lc()    { printf '%s' "$1" | tr '[:upper:]' '[:lower:]'; }  # bash 3.2 не знает ${v,,}
 info()  { printf '%s\n' "${BLU}ℹ${RST}  $*"; }
 ok()    { printf '%s\n' "${GRN}✓${RST}  $*"; }
 warn()  { printf '%s\n' "${YLW}⚠${RST}  $*" >&2; }
@@ -59,7 +60,7 @@ EOF
 # ─────────────────────────── Разбор аргументов ───────────────────────────
 while [[ $# -gt 0 ]]; do
     case "$1" in
-        -f|--format)    SRC_FMT="${2,,}"; shift 2 ;;
+        -f|--format)    SRC_FMT="$(lc "$2")"; shift 2 ;;
         -q|--quality)   QUALITY="$2"; shift 2 ;;
         -s|--scale)     SCALE="$2"; shift 2 ;;
         -r|--recursive) RECURSIVE=1; shift ;;
@@ -80,7 +81,7 @@ ask() {  # ask "Вопрос" "значение_по_умолчанию" → ech
 }
 
 is_yes() {  # принимает y/yes/д/да в любом регистре
-    case "${1,,}" in y|yes|д|да) return 0 ;; *) return 1 ;; esac
+    case "$(lc "$1")" in y|yes|д|да) return 0 ;; *) return 1 ;; esac
 }
 
 check_deps() {
@@ -120,7 +121,9 @@ find_args=("$FOLDER")
 [[ "$RECURSIVE" -eq 1 ]] || find_args+=(-maxdepth 1)
 find_args+=(-type f -iname "*.${SRC_FMT}")
 
-mapfile -d '' -t files < <(find "${find_args[@]}" -print0)
+# ponytail: portable вместо mapfile -d (bash 4+) — macOS несёт bash 3.2
+files=()
+while IFS= read -r -d '' f; do files+=("$f"); done < <(find "${find_args[@]}" -print0)
 
 if [[ ${#files[@]} -eq 0 ]]; then
     warn "В папке '$FOLDER' не найдено файлов .${SRC_FMT}"
