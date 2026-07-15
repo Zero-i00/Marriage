@@ -14,7 +14,7 @@ export function ColorBadge({ hex, label, className, ...rest }: Props) {
   const handleCopyColor = () => {
     copyToClipboard(hex)
       .then(() =>
-        toast.success(`Скопирован ${label} цвет`, {
+        toast.success(`Скопирован цвет: "${label}"`, {
           iconTheme: {
             primary: hex,
             secondary: "white",
